@@ -1,1 +1,14 @@
-# SnazzySnappers__tanzeemh2_ethans175_lindaz44_nial24
+# Elephant by SnazzySnappers
+---
+## Roster: 
+Tanzeem Hasan - Project Manager
+Ethan Sie - 
+Linda Zhang - 
+Nia Lam - 
+
+## Project Description:
+---
+## Install Gude:
+---
+## Launch Codes:
+---

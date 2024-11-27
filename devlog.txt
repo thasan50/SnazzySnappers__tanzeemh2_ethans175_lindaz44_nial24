@@ -1,2 +1,8 @@
-tanzeemh2 -- 2024-11-25
-Created basic repo structure of project, submitted google form, linked submodule
+tanzeemh -- 2024-11-25 19:43
+- Created basic repo structure of project, submitted google form, linked submodule
+- Updated flag
+
+tanzeemh -- 2024-11-26 23:17
+- Updated frontend, backend components, frontend framework
+- Created component map, site map.
+- Created tasks and uploaded design.pdf

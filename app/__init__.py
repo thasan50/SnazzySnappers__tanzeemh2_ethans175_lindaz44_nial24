@@ -24,11 +24,13 @@ def home():
         return render_template("home.html", user = session['username'])
     else:
         return redirect("/registration")
-
+#In home, if you recieve some input, it should redirect into /view_city page
+# Additionally, should include button to move to /natural_disaster
+# Button to check /user_history
 @app.route("/registration")
-
+# Leave empty for Nia to do
 @app.route("/view_city")
-
+# This should contain a button to redirect into /history page
 @app.route("/history")
 
 @app.route("/natural_disaster")

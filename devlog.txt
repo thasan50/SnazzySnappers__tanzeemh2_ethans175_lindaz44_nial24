@@ -1,4 +1,4 @@
-tanzeemh -- 2024-11-25 19:43
+tanzeemH -- 2024-11-25 19:43
 - Created basic repo structure of project, submitted google form, linked submodule
 - Updated flag
 
@@ -7,5 +7,14 @@ tanzeemh -- 2024-11-26 23:17
 - Created component map, site map.
 - Created tasks and uploaded design.pdf
 
-ethanS -- 2024-12-03 1:10
+ethanS -- 2024-12-03 01:10
 - Created Diagram for Database to clear up organization
+
+tanzeemH -- 2024-12-03 06:53
+- Updated readme heading
+- Noted what tables and APIs are referenced in each template on design.pdf
+- Updated weather and history tables to inclue a population component
+- Uploaded new design.pdf
+
+lindaZ -- 2024-12-03 06:55
+- Updated distribution of roles to account for creation of weather map

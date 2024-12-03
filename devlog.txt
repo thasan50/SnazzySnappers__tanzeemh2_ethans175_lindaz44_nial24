@@ -6,3 +6,6 @@ tanzeemh -- 2024-11-26 23:17
 - Updated frontend, backend components, frontend framework
 - Created component map, site map.
 - Created tasks and uploaded design.pdf
+
+ethanS -- 2024-12-03 1:10
+- Created Diagram for Database to clear up organization

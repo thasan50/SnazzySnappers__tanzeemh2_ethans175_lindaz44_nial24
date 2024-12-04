@@ -14,14 +14,16 @@
 		</style>
     </head>
     <body>
-        <div class="bg-slate-300 flex items-center justify-center">
+      <div class="container mx-auto box-border m-20 bg-slate-400">
+        <div class= "h-64 w-64 bg-slate-300 flex items-center justify-center">
             <form action="/login" method="POST">
                 <label for="username">Username:</label><br>
                 <input type="text" name="username"><br>
                 <label for="password">Password:</label><br>
                 <input type="password" name="password" required><br>
-                <button class="dark:md:hover:bg-fuchsia-600" type="submit">Login</button>
+                <button class="m-2 box-border p-2 border-3 bg-slate-100 rounded-xl hover:bg-fuchsia-300" type="submit">Login</button>
             </form>
         </div>
+      </div>
     </body>
 </html>

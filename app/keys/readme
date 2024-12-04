@@ -10,10 +10,11 @@ OpenWeatherMap:
 
 VisualCrossing:
 - Key required
-- Key not currently available in txt file
+- Key currently available in txt file
 
 EartquakeUSGS:
 - Key not required
 
 WorldPop:
-- Key not required
+- Key not required (more requests are available if key is made)
+- Key not currently available in txt file

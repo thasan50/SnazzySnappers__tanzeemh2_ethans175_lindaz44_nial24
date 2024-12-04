@@ -23,3 +23,8 @@ ethanS -- 2024-12-03 11:26
 - Began database creation (created db.py)
 - Coded methods to initialize tables, enter user information, and update time based on last login
 - Note to any DB Engineers, this will crash if you run it as I haven't yet replaced the timestamp input with a valid value
+
+niaL -- 2024-12-03 17:21
+- Updated API descriptions
+- Updated keys readme
+- Added API key for Visual Crossing

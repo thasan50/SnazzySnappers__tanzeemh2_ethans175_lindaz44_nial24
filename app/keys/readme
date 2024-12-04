@@ -1,0 +1,19 @@
+API Status
+
+Google Fonts:
+- Key required
+- Key not currently available in txt file
+
+OpenWeatherMap:
+- Key required
+- Key not currently available in txt file
+
+VisualCrossing:
+- Key required
+- Key not currently available in txt file
+
+EartquakeUSGS:
+- Key not required
+
+WorldPop:
+- Key not required

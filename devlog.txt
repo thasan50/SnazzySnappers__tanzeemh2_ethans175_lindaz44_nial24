@@ -18,3 +18,8 @@ tanzeemH -- 2024-12-03 06:53
 
 lindaZ -- 2024-12-03 06:55
 - Updated distribution of roles to account for creation of weather map
+
+ethanS -- 2024-12-03 11:26
+- Began database creation (created db.py)
+- Coded methods to initialize tables, enter user information, and update time based on last login
+- Note to any DB Engineers, this will crash if you run it as I haven't yet replaced the timestamp input with a valid value

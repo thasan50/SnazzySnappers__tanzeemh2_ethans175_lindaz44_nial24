@@ -31,8 +31,9 @@ def home():
 #In home, if you recieve some input, it should redirect into /view_city page
 # Additionally, should include button to move to /natural_disaster
 # Button to check /user_history
-# @app.route("/registration")
-#
+@app.route("/registration")
+def register():
+    return render_template("registration.html")
 # # Leave empty for Nia to do
 # @app.route("/view_city")
 #

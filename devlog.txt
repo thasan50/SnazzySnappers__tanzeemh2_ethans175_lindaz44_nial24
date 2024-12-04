@@ -28,3 +28,7 @@ niaL -- 2024-12-03 17:21
 - Updated API descriptions
 - Updated keys readme
 - Added API key for Visual Crossing
+
+lindaZ -- 2024-12-03 21:38
+- Made api card for visual crossing and world pop
+- started working on html templates

@@ -6,11 +6,12 @@
 
 import sqlite3
 import csv
+from datetime import datetime
 
 DB_FILE = "geoTracker.db"
 latestUID = -1
 
-def createTables():
+def setup():
     db = sqlite3.connect(DB_FILE, check_same_thread=False)
     c = db.cursor()
     c.execute("CREATE TABLE users (userID INTEGER PRIMARY KEY, username TEXT, password TEXT, created_at TEXT, last_login TEXT);")
@@ -26,13 +27,13 @@ def addUser(username, password):
     c = db.cursor()
     global latestUID
     latestUID += 1
-    c.execute("INSERT INTO users VALUES(?, ?, ?, ?, ?)", latestUID, username, password, {TIME HERE}, {TIME HERE})
+    c.execute("INSERT INTO users VALUES(?, ?, ?, ?, ?)", latestUID, username, password, datetime.now(), datetime.now())
     db.commit()
     db.close()
 
 def updateLoginTime(user):
     db = sqlite3.connect(DB_FILE, check_same_thread=False)
     c = db.cursor()
-    c.execute("UPDATE users SET last_login = '{TIME HERE}', WHERE username = user" )
+    c.execute("UPDATE users SET last_login = ?, WHERE username = ?", (datetime.now(), user))
     db.commit()
     db.close()

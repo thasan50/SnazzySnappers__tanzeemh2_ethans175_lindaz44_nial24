@@ -32,3 +32,7 @@ niaL -- 2024-12-03 17:21
 lindaZ -- 2024-12-03 21:38
 - Made api card for visual crossing and world pop
 - started working on html templates
+
+ethanS -- 2024-12-04 10:40
+- Updated main python file to refresh database file
+- Completed methods started on 2024-12-03

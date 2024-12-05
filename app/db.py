@@ -15,11 +15,12 @@ def setup():
     c = db.cursor()
     # main difference from DD is the integer primary key that autoincrements for each database
     # these are unique per DB, but the DBs are still connected through userID and search_type
+    # note that we may want to create another column to detail the timestamps of the data itself from the APIs
     c.execute("CREATE TABLE users (userID INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, password TEXT, created_at TEXT, last_login TEXT);")
-    c.execute("CREATE TABLE userHistory (history_id INTEGER PRIMARY KEY AUTOINCREMENT, userID INTEGER, search_type TEXT, location_name TEXT, search_time TEXT);")
-    c.execute("CREATE TABLE weather (weather_ID INTEGER PRIMARY KEY AUTOINCREMENT, search_type TEXT, location_name TEXT, latitude REAL, longitude REAL, temperature REAL, humidity INTEGER, precipitation REAL, wind_speed REAL, timestamp TEXT);")
-    c.execute("CREATE TABLE weatherHistory (history_id INTEGER PRIMARY KEY AUTOINCREMENT, search_type TEXT, location_name TEXT, latitude REAL, longitude REAL, year INTEGER, avg_temperature REAL, avg_precipitation REAL, high_temperature REAL, low_temperature REAL);")
-    c.execute("CREATE TABLE earthquakes (earthquake_id INTEGER PRIMARY KEY AUTOINCREMENT, search_type TEXT, location_name TEXT, latitude REAL, longitude REAL, magnitude REAL, depth REAL, description TEXT, timestamp TEXT);")
+    c.execute("CREATE TABLE userHistory (history_id INTEGER PRIMARY KEY AUTOINCREMENT, userID INTEGER, search_type TEXT, search_time TEXT);")
+    c.execute("CREATE TABLE weather (weather_ID INTEGER PRIMARY KEY AUTOINCREMENT, location_name TEXT, latitude REAL, longitude REAL, temperature REAL, humidity INTEGER, precipitation REAL, wind_speed REAL, search_time TEXT);")
+    c.execute("CREATE TABLE weatherHistory (history_id INTEGER PRIMARY KEY AUTOINCREMENT, location_name TEXT, latitude REAL, longitude REAL, year INTEGER, avg_temperature REAL, avg_precipitation REAL, high_temperature REAL, low_temperature REAL, search_time TEXT);")
+    c.execute("CREATE TABLE earthquakes (earthquake_id INTEGER PRIMARY KEY AUTOINCREMENT, location_name TEXT, latitude REAL, longitude REAL, magnitude REAL, depth REAL, description TEXT, search_time TEXT);")
     db.commit()
     db.close()
 
@@ -55,32 +56,37 @@ def getUserID(username):
     else:
         raise ValueError("User not found")
 
-def updateUserHistory(username, search_type, location_name):
+def updateUserHistory(username, search_type, current_time):
+    db = sqlite3.connect(DB_FILE, check_same_thread=False)
+    c = db.cursor()
+    userID = getUserID(username)
+    c.execute("INSERT INTO userHistory (userID, search_type, search_time) VALUES (?, ?, ?)", (userID, search_type, current_time))
+    db.commit()
+    db.close()
+
+def logWeather(username, location_name, latitude, longitude, temperature, humidity, precipitation, wind_speed):
     db = sqlite3.connect(DB_FILE, check_same_thread=False)
     c = db.cursor()
     current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    userID = getUserID(username)
-    c.execute("INSERT INTO userHistory (userID, search_type, location_name, search_time) VALUES (?, ?, ?, ?)", (userID, search_type, location_name, current_time))
+    updateUserHistory(username, "weather", current_time)
+    c.execute("INSERT INTO weather (location_name, latitude, longitude, temperature, humidity, precipitation, wind_speed, search_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (location_name, latitude, longitude, temperature, humidity, percipitation, wind_speed, current_time))
     db.commit()
     db.close()
 
-def logWeather():
+def logWeatherHistory(username, location_name, latitude, longitude, year, avg_temperature, avg_precipitation, high_temperature, low_temperature):
     db = sqlite3.connect(DB_FILE, check_same_thread=False)
     c = db.cursor()
-    # db logging HERE
-    db.commit()
-    db.close()
-
-def logWeatherHistory():
-    db = sqlite3.connect(DB_FILE, check_same_thread=False)
-    c = db.cursor()
-    # db logging HERE
+    current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    updateUserHistory(username, "weatherHistory", current_time)
+    c.execute("INSERT INTO weatherHistory (location_name, latitude, longitude, year, avg_temperature, avg_precipitation, high_temperature, low_temperature, search_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", (location_name, latitude, longitude, year, avg_temperature, avg_precipitation, high_temperature, low_temperature, current_time))
     db.commit()
     db.close()
 
 def logEarthquakes():
     db = sqlite3.connect(DB_FILE, check_same_thread=False)
     c = db.cursor()
-    # db logging HERE
+    current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    updateUserHistory(username, "earthquakes", current_time)
+    c.execute("INSERT INTO earthquakes")
     db.commit()
     db.close()

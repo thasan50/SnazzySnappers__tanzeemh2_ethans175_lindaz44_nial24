@@ -32,8 +32,17 @@ def home():
 # Additionally, should include button to move to /natural_disaster
 # Button to check /user_history
 @app.route("/registration")
-def register():
-    return render_template("registration.html")
+def registration():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        db.addUser(username, password)
+        session['username'] = username
+
+        return redirect("/")
+    else:
+        return render_template(url_for('registraton.html')
 # # Leave empty for Nia to do
 @app.route("/view_city")
 def view():

@@ -36,3 +36,10 @@ lindaZ -- 2024-12-03 21:38
 ethanS -- 2024-12-04 10:40
 - Updated main python file to refresh database file
 - Completed methods started on 2024-12-03
+
+ethanS -- 2024-12-04 20:56
+- Added comments for methods
+- Fixed minor errors throughout DB code
+- Added keys that autoincrement instead of a manual increment UID
+- Coded a helper to get the userID from username
+- Added base code for logging methods for API DBs

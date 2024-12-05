@@ -35,15 +35,19 @@ def home():
 def register():
     return render_template("registration.html")
 # # Leave empty for Nia to do
-# @app.route("/view_city")
-#
+@app.route("/view_city")
+def view():
+    return render_template("view.html");
 # # This should contain a button to redirect into /history page
-# @app.route("/history")
-#
-# @app.route("/natural_disaster")
-#
-# @app.route("/user_history")
-
+@app.route("/history")
+def history():
+    return render_template('history.html');
+@app.route("/natural_disaster")
+def disaster():
+    return render_template('disaster.html');
+@app.route("/user_history")
+def user_history():
+    return render_template('user_history.html');
 
 if __name__ == '__main__':
     app.debug = True

@@ -22,16 +22,18 @@
             {% endfor %}
         {% endif %}
         {% endwith %}
+
         <div class= "h-64 w-64 bg-slate-300 flex items-center justify-center">
-            <form action="/auth_registration" method="POST">
+            <form action="/auth_login" method="POST">
                 <label for="username">Username:</label><br>
                 <input type="text" name="username" required><br>
                 <label for="password">Password:</label><br>
                 <input type="password" name="password" required><br>
-                <button class="m-2 box-border p-2 border-3 bg-slate-100 rounded-xl hover:bg-fuchsia-300" type="submit">Register</button>
-                <h2> Already registered? Log in here -></h2>
+                <button class="m-2 box-border p-2 border-3 bg-slate-100 rounded-xl hover:bg-fuchsia-300" type="submit">Login</button>
+                <h2> Not registered? Do so here -></h2>
                 <a href="/registration">Pop</a>
             </form>
+            
         </div>
       </div>
     </body>

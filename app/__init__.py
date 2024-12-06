@@ -5,7 +5,6 @@
 # Time Spent: x hours
 
 import random
-import db
 from flask import Flask, render_template, request, session, redirect, url_for, flash
 import os
 import sqlite3
@@ -25,40 +24,66 @@ db.setup() # sets up databases
 @app.route("/", methods=['GET', 'POST'])
 def home():
     if 'username' in session:
-        return render_template("home.html", user = session['username'])
+        return render_template("home.html", username = session['username'])
     else:
-        return redirect("/registration")
-#In home, if you recieve some input, it should redirect into /view_city page
+        return redirect("/login")
+#In home, if you receive some input, it should redirect into /view_city page
 # Additionally, should include button to move to /natural_disaster
 # Button to check /user_history
-@app.route("/registration")
-def registration():
-    if request.method == 'POST':
+@app.route('/login', methods=['GET','POST'])
+def login():
+    return render_template("login.html")
+
+@app.route("/auth_login", methods=['GET', 'POST'])
+def auth_login():
+    if request.method == "POST":
         username = request.form['username']
         password = request.form['password']
 
-        db.addUser(username, password)
-        session['username'] = username
+        if db.getUserID(username) >= 0:
+            session['username'] = username
+            return redirect('/')
+        else:
+            flash("Incorrect username or password.", 'error')
+            return redirect("/login")
 
-        return redirect("/")
-    else:
-        return render_template(url_for('registraton.html')
-# # Leave empty for Nia to do
+@app.route("/registration", methods=['GET', 'POST'])
+def registration():
+    return render_template("registration.html")
+
+@app.route("/auth_registration", methods=['GET', 'POST'])
+def auth_registration():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        
+        if db.getUserID(username) >= 0:
+            flash("Username already exists", 'error')
+            return redirect("/registration")
+        else: 
+            session['username'] = username
+            db.addUser(username, password)
+            return redirect("/login")
+
+@app.route('/logout', methods=["GET", "POST"])
+def logout():
+    session.pop('username', None)
+    session.pop('name', None)
+    return redirect("/")
+    
 @app.route("/view_city")
 def view():
-
-    return render_template("view.html");
+    return render_template("view.html")
 # # This should contain a button to redirect into /history page
 @app.route("/history")
 def history():
-    return render_template('history.html');
+    return render_template('history.html')
 @app.route("/natural_disaster")
 def disaster():
-    return render_template('disaster.html');
+    return render_template('disaster.html')
 @app.route("/user_history")
 def user_history():
-
-    return render_template('user_history.html');
+    return render_template('user_history.html')
 
 if __name__ == '__main__':
     app.debug = True

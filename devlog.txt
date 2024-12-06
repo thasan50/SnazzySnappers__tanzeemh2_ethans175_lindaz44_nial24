@@ -37,9 +37,44 @@ ethanS -- 2024-12-04 10:40
 - Updated main python file to refresh database file
 - Completed methods started on 2024-12-03
 
+tanzeemH -- 2024-12-04 10:55
+- Created project description
+- Created install guide
+- Created launch codes
+- Created matplotlib request post
+- Created datetime request post
+- Created basic python routing
+
 ethanS -- 2024-12-04 20:56
 - Added comments for methods
 - Fixed minor errors throughout DB code
 - Added keys that autoincrement instead of a manual increment UID
 - Coded a helper to get the userID from username
 - Added base code for logging methods for API DBs
+
+niaL -- 2024-12-05 11:00
+- Coded flask registration
+- Added API key for OpenWeather
+- how-to for datetime
+
+ethanS -- 2024-12-05 11:01
+- Completed database logging methods for weather and weatherHistory
+- Changed structure of database to reduce redundancy; Note: when we get around to implementing our APIs, we may want to add a new column for the time the actual data was collected
+- Added code from DNL for /registration flask code to avoid various merge errors
+
+ethanS -- 2024-12-05 19:12
+- Fixed routing errors in main python file
+- Fixed typos in database file and completed earthquake logging method
+- Updated requirements.txt
+
+lindaZ -- 2024-12-05 21:21
+- Working on implementing fef in templates
+- Finished demo on matplotlibs
+
+tanzeemH -- 2024-12-06 04:30
+- Verified requirements.txt
+- Created basic functions for each python route
+- Created additional templates (login.html) and updated text for each template, 
+allowing for use of python code and webpage navigation
+- Created login, auth_login, auth_registration, logout functions, updated registration function
+- Updated getUserID()

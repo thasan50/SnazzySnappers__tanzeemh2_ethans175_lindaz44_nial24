@@ -24,6 +24,7 @@ db.setup() # sets up databases
 @app.route("/", methods=['GET', 'POST'])
 def home():
     if 'username' in session:
+        print(db.getTableData("users", "username", "Ethan"))
         return render_template("home.html", username = session['username'])
     else:
         return redirect("/login")
@@ -56,11 +57,11 @@ def auth_registration():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        
+
         if db.getUserID(username) >= 0:
             flash("Username already exists", 'error')
             return redirect("/registration")
-        else: 
+        else:
             session['username'] = username
             db.addUser(username, password)
             return redirect("/login")
@@ -70,7 +71,7 @@ def logout():
     session.pop('username', None)
     session.pop('name', None)
     return redirect("/")
-    
+
 @app.route("/view_city")
 def view():
     return render_template("view.html")

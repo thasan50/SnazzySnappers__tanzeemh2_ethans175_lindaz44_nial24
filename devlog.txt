@@ -73,5 +73,8 @@ lindaZ -- 2024-12-05 21:21
 
 tanzeemH -- 2024-12-06 04:30
 - Verified requirements.txt
-- Created additional templates
-- Updated basic python routing
+- Created basic functions for each python route
+- Created additional templates (login.html) and updated text for each template, 
+allowing for use of python code and webpage navigation
+- Created login, auth_login, auth_registration, logout functions, updated registration function
+- Updated getUserID()

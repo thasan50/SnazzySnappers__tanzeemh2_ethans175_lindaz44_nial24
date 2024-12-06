@@ -40,14 +40,14 @@ def auth_login():
         username = request.form['username']
         password = request.form['password']
 
-        if db.getUserID(username):
+        if db.getUserID(username) >= 0:
             session['username'] = username
             return redirect('/')
         else:
             flash("Incorrect username or password.", 'error')
             return redirect("/login")
 
-@app.route("/registration")
+@app.route("/registration", methods=['GET', 'POST'])
 def registration():
     return render_template("registration.html")
 
@@ -63,9 +63,14 @@ def auth_registration():
         else: 
             session['username'] = username
             db.addUser(username, password)
-            return redirect("/")
+            return redirect("/login")
 
-# # Leave empty for Nia to do
+@app.route('/logout', methods=["GET", "POST"])
+def logout():
+    session.pop('username', None)
+    session.pop('name', None)
+    return redirect("/")
+    
 @app.route("/view_city")
 def view():
     return render_template("view.html")

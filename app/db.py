@@ -1,7 +1,7 @@
-# SnazzySnapeprs - Tanzeem Hasan, Ethan Sie, Linda Zhang, Nia Lam
+# SnazzySnappers - Tanzeem Hasan, Ethan Sie, Linda Zhang, Nia Lam
 # SoftDev
 # P01: ArRESTed Development
-# 2024-??-??
+# 2024-12-17
 # Time Spent: x hours
 
 import sqlite3

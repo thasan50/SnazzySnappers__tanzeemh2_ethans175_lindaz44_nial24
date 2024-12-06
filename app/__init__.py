@@ -1,4 +1,4 @@
-# SnazzySnapeprs - Tanzeem Hasan, Ethan Sie, Linda Zhang, Nia Lam
+# SnazzySnappers - Tanzeem Hasan, Ethan Sie, Linda Zhang, Nia Lam
 # SoftDev
 # P01: ArRESTed Development
 # 2024-12-17
@@ -56,11 +56,11 @@ def auth_registration():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        
+
         if db.getUserID(username) >= 0:
             flash("Username already exists", 'error')
             return redirect("/registration")
-        else: 
+        else:
             session['username'] = username
             db.addUser(username, password)
             return redirect("/login")
@@ -70,7 +70,7 @@ def logout():
     session.pop('username', None)
     session.pop('name', None)
     return redirect("/")
-    
+
 @app.route("/view_city")
 def view():
     return render_template("view.html")

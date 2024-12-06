@@ -58,3 +58,7 @@ ethanS -- 2024-12-05 19:12
 - Fixed routing errors in main python file
 - Fixed typos in database file and completed earthquake logging method
 - Updated requirements.txt
+
+lindaZ -- 2024-12-05 21:21
+- Working on implementing fef in templates
+- Finished demo on matplotlibs

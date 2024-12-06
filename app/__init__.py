@@ -21,27 +21,50 @@ if (os.path.isfile("geoTracker.db")):
     os.remove("geoTracker.db")
 db.setup() # sets up databases
 
-@app.route("/home", methods=['GET', 'POST'])
+@app.route("/", methods=['GET', 'POST'])
 def home():
     if 'username' in session:
         return render_template("home.html", username = session['username'])
     else:
-        return redirect("/registration")
-#In home, if you recieve some input, it should redirect into /view_city page
+        return redirect("/login")
+#In home, if you receive some input, it should redirect into /view_city page
 # Additionally, should include button to move to /natural_disaster
 # Button to check /user_history
-@app.route("/registration", methods=['GET', 'POST'])
-def registration():
-    if request.method == 'POST':
+@app.route('/login', methods=['GET','POST'])
+def login():
+    return render_template("login.html")
+
+@app.route("/auth_login", methods=['GET', 'POST'])
+def auth_login():
+    if request.method == "POST":
         username = request.form['username']
         password = request.form['password']
 
-        session['username'] = username
-        db.addUser(username, password)
+        if db.getUserID(username):
+            session['username'] = username
+            return redirect('/')
+        else:
+            flash("Incorrect username or password.", 'error')
+            return redirect("/login")
 
-        return redirect(url_for('home'))
-    else:
-        return render_template('registration.html')
+@app.route("/registration")
+def registration():
+    return render_template("registration.html")
+
+@app.route("/auth_registration", methods=['GET', 'POST'])
+def auth_registration():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        
+        if db.getUserID(username) >= 0:
+            flash("Username already exists", 'error')
+            return redirect("/registration")
+        else: 
+            session['username'] = username
+            db.addUser(username, password)
+            return redirect("/")
+
 # # Leave empty for Nia to do
 @app.route("/view_city")
 def view():

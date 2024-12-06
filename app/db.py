@@ -54,7 +54,7 @@ def getUserID(username):
     if result:
         return result[0]
     else:
-        raise ValueError("User not found")
+        return -1
 
 def updateUserHistory(username, search_type, current_time):
     db = sqlite3.connect(DB_FILE, check_same_thread=False)

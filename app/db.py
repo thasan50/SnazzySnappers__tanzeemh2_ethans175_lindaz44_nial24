@@ -82,7 +82,7 @@ def logWeatherHistory(username, location_name, latitude, longitude, year, avg_te
     db.commit()
     db.close()
 
-def logEarthquakes():
+def logEarthquakes(username, location_name, latitude, longitude, magnitude, depth, description):
     db = sqlite3.connect(DB_FILE, check_same_thread=False)
     c = db.cursor()
     current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')

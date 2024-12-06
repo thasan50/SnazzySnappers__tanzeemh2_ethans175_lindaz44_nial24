@@ -43,3 +43,13 @@ ethanS -- 2024-12-04 20:56
 - Added keys that autoincrement instead of a manual increment UID
 - Coded a helper to get the userID from username
 - Added base code for logging methods for API DBs
+
+ethanS -- 2024-12-05 11:01
+- Completed database logging methods for weather and weatherHistory
+- Changed structure of database to reduce redundancy; Note: when we get around to implementing our APIs, we may want to add a new column for the time the actual data was collected
+- Added code from DNL for /registration flask code to avoid various merge errors
+
+ethanS -- 2024-12-05 19:12
+- Fixed routing errors in main python file
+- Fixed typos in database file and completed earthquake logging method
+- Updated requirements.txt

@@ -69,7 +69,7 @@ def logWeather(username, location_name, latitude, longitude, temperature, humidi
     c = db.cursor()
     current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     updateUserHistory(username, "weather", current_time)
-    c.execute("INSERT INTO weather (location_name, latitude, longitude, temperature, humidity, precipitation, wind_speed, search_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (location_name, latitude, longitude, temperature, humidity, percipitation, wind_speed, current_time))
+    c.execute("INSERT INTO weather (location_name, latitude, longitude, temperature, humidity, precipitation, wind_speed, search_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (location_name, latitude, longitude, temperature, humidity, precipitation, wind_speed, current_time))
     db.commit()
     db.close()
 
@@ -87,6 +87,6 @@ def logEarthquakes():
     c = db.cursor()
     current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     updateUserHistory(username, "earthquakes", current_time)
-    c.execute("INSERT INTO earthquakes")
+    c.execute("INSERT INTO earthquakes (location_name, latitude, longitude, magnitude, depth, description, search_time) VALUES (?, ?, ?, ?, ?, ?, ?)", (location_name, latitude, longitude, magnitude, depth, description, current_time))
     db.commit()
     db.close()

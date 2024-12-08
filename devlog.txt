@@ -78,3 +78,11 @@ tanzeemH -- 2024-12-06 04:30
 allowing for use of python code and webpage navigation
 - Created login, auth_login, auth_registration, logout functions, updated registration function
 - Updated getUserID()
+
+ethanS -- 2024-12-08 14:09
+- Used Geocoding API to turn location name into longitude and latitude
+- Entered longitude and latitude as queries in the USGS Earthquake API
+- Turned response into a JSON
+- Made interactive with a form action on shakemap_form.html
+- Note: We will need to add a github card for the Geocoding API
+

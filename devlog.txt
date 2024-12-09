@@ -86,3 +86,5 @@ ethanS -- 2024-12-08 14:09
 - Made interactive with a form action on earthquake_form.html
 - Note: We will need to add a github card for the Geocoding API
 
+ethanS -- 2024-12-09 11:00
+- Changed structure while working on integrating USGS API with main python file

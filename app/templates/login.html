@@ -22,14 +22,14 @@
         {% endif %}
         {% endwith %}
         <div class= "h-screen flex items-center justify-center">
-            <form action="/auth_registratiosn" method="POST">
+            <form action="/auth_login" method="POST">
               <div class="flex flex-col space-y-2">
                 <label for="username">Username:</label>
                 <input class="h-10 rounded-md" type="text" name="username" required>
                 <label for="password">Password:</label>
                 <input class="h-10 rounded-md" type="password" name="password" required>
-                <br><button class="m-2 box-border p-2 border-3 bg-slate-100 rounded-xl hover:bg-fuchsia-300" type="submit">Register</button>
-                <br><h2> Notregistered? Do so here -></h2>
+                <br><button class="m-2 box-border p-2 border-3 bg-slate-100 rounded-xl hover:bg-fuchsia-300" type="submit">Log in</button>
+                <br><h2> Not registered? Do so here -></h2>
                 <a href="/registration">Pop</a>
               </div>
             </form>

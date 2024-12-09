@@ -14,11 +14,9 @@ app = Flask(__name__)
 USGS_API_URL = "https://earthquake.usgs.gov/fdsnws/event/1/query"
 GEOCODING_API_URL = "https://nominatim.openstreetmap.org/search" # NEED TO ADD A CARD FOR THIS
 
-@app.route('/', methods=['GET'])
 def home():
     return render_template("earthquake_form.html")
 
-@app.route('/earthquakes', methods=['GET'])
 def get_earthquake_data_by_place():
     place = request.args.get("place", "New York")
     if not place:

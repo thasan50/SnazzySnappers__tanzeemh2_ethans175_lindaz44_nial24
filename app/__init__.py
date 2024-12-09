@@ -11,7 +11,7 @@ import sqlite3
 import sys
 # import database here
 import db
-
+import EarthquakeUSGS
 DB_FILE = "db.py"
 app = Flask(__name__)
 
@@ -47,6 +47,14 @@ def auth_login():
         else:
             flash("Incorrect username or password.", 'error')
             return redirect("/login")
+
+@app.route("/earthquake_form", methods=['GET', 'POST'])
+def earthquake_form():
+    return EarthquakeUSGS.home()
+
+@app.route("/earthquakes_display", methods=['GET', 'POST'])
+def earthquake_display():
+    return EarthquakeUSFS.get_earthquake_data_by_place()
 
 @app.route("/registration", methods=['GET', 'POST'])
 def registration():

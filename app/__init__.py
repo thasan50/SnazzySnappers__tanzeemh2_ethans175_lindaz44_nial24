@@ -12,6 +12,8 @@ import sys
 # import database here
 import db
 import EarthquakeUSGS
+from APImodules import APIs
+
 DB_FILE = "db.py"
 app = Flask(__name__)
 

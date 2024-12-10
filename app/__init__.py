@@ -89,9 +89,9 @@ def view():
 @app.route("/history")
 def history():
     return render_template('history.html')
-@app.route("/natural_disaster")
-def disaster():
-    return render_template('disaster.html')
+# @app.route("/natural_disaster")
+# def disaster():
+#     return render_template('disaster.html')
 @app.route("/user_history")
 def user_history():
     return render_template('user_history.html')

@@ -4,13 +4,14 @@
 # 2024-12-17
 # Time Spent: x hours
 
-import json
+from flask import Flask, request, jsonify, render_template
+import urllib.parse
 import urllib.request
-from urllib.request import Request, urlopen
+import json
 
 def fetch_worldpop_data(country_iso3):
     url = f"https://hub.worldpop.org/rest/data/pop/wpgp?iso3={country_iso3}"
-    headers = {"User-Agent": "Mozilla/5.0"} 
+    headers = {"User-Agent": "Mozilla/5.0"}
     try:
         request = Request(url, headers=headers)
         response = urlopen(request)
@@ -21,7 +22,7 @@ def fetch_worldpop_data(country_iso3):
 
 def fetch_google_fonts():
     key_file_path = os.path.join("keys", "key_GoogleFonts.txt")
-    
+
     try:
         with open(key_file_path, "r") as file:
             api_key = file.read().strip()
@@ -38,7 +39,7 @@ def fetch_google_fonts():
         else:
             print(f"Error: Unable to fetch data (Status code: {response.status_code})")
             print(f"Response: {response.text}")
-    
+
     except FileNotFoundError:
         print(f"Error: The file '{key_file_path}' was not found. Please create it and add your API key.")
     except ValueError as ve:
@@ -57,16 +58,16 @@ def fetch_openweather_data(city_name):
         params = {
             "q": city_name,
             "appid": api_key,
-            "units": "metric"  
+            "units": "metric"
         }
-        response = requests.get(url, params=params) 
+        response = requests.get(url, params=params)
         if response.status_code == 200:
             weather_data = response.json()
             print(json.dumps(weather_data, indent=4))
         else:
             print(f"Error: Unable to fetch data (Status code: {response.status_code})")
             print(f"Response: {response.text}")
-    
+
     except FileNotFoundError:
         print(f"Error: The file '{key_file_path}' was not found. Please create it and add your API key.")
     except ValueError as ve:
@@ -85,7 +86,7 @@ def fetch_visualcrossing_data(location):
         full_url = f"{url}/{location}"
         params = {
             "key": api_key,
-            "unitGroup": "metric"  
+            "unitGroup": "metric"
         }
         response = requests.get(full_url, params=params)
         if response.status_code == 200:
@@ -94,10 +95,60 @@ def fetch_visualcrossing_data(location):
         else:
             print(f"Error: Unable to fetch data (Status code: {response.status_code})")
             print(f"Response: {response.text}")
-    
+
     except FileNotFoundError:
         print(f"Error: The file '{key_file_path}' was not found. Please create it and add your API key.")
     except ValueError as ve:
         print(f"Error: {ve}")
     except requests.exceptions.RequestException as e:
         print(f"An error occurred: {e}")
+
+def fetch_earthquake_data():
+    USGS_API_URL = "https://earthquake.usgs.gov/fdsnws/event/1/query"
+    GEOCODING_API_URL = "https://nominatim.openstreetmap.org/search"
+
+    place = request.args.get("place", None)
+    if not place:
+        return jsonify({"error": "Place is required"}), 400
+
+    # Fetch latitude and longitude for the place
+    geocode_params = {
+        "q": place,
+        "format": "json",  # Response format
+        "limit": 1         # Only fetch the first result
+    }
+    geocode_query = urllib.parse.urlencode(geocode_params)
+    geocode_url = f"{GEOCODING_API_URL}?{geocode_query}"
+
+    try:
+        with urllib.request.urlopen(geocode_url) as response:
+            geocode_data = json.loads(response.read())
+            if not geocode_data:
+                return jsonify({"error": "Place not found"}), 404
+
+            # Extract latitude and longitude
+            latitude = geocode_data[0]["lat"]
+            longitude = geocode_data[0]["lon"]
+    except urllib.error.URLError as e:
+        return jsonify({"error": f"Geocoding failed: {e}"}), 500
+
+    # Use the latitude and longitude to fetch earthquake data
+    earthquake_params = {
+        "format": "geojson",
+        "latitude": latitude,
+        "longitude": longitude,
+        "maxradiuskm": request.args.get("maxradiuskm", "500"),
+        "starttime": request.args.get("starttime", "2024-01-01"),
+        "endtime": request.args.get("endtime", "2024-12-31"),
+        "minmagnitude": request.args.get("minmagnitude", "4.5"),
+    }
+    earthquake_query = urllib.parse.urlencode(earthquake_params)
+    earthquake_url = f"{USGS_API_URL}?{earthquake_query}"
+
+    try:
+        with urllib.request.urlopen(earthquake_url) as response:
+            earthquake_data = json.loads(response.read())
+    except urllib.error.URLError as e:
+        return jsonify({"error": f"Earthquake API failed: {e}"}), 500
+
+    return jsonify(earthquake_data)

@@ -11,8 +11,7 @@ import sqlite3
 import sys
 # import database here
 import db
-import EarthquakeUSGS
-from APImodules import APIs
+import APIs
 
 DB_FILE = "db.py"
 app = Flask(__name__)
@@ -56,7 +55,7 @@ def earthquake_form():
 
 @app.route("/earthquake_display", methods=['GET', 'POST'])
 def earthquake_display():
-    return EarthquakeUSGS.get_earthquake_data_by_place(place)
+    return APIs.fetch_earthquake_data()
 
 @app.route("/registration", methods=['GET', 'POST'])
 def registration():
@@ -89,13 +88,7 @@ def view():
 @app.route("/history")
 def history():
     return render_template('history.html')
-<<<<<<< HEAD
-# @app.route("/natural_disaster")
-# def disaster():
-#     return render_template('disaster.html')
-=======
 
->>>>>>> DES
 @app.route("/user_history")
 def user_history():
     return render_template('user_history.html')

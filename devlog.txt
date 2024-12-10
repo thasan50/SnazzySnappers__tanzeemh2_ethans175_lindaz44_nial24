@@ -86,5 +86,12 @@ ethanS -- 2024-12-08 14:09
 - Made interactive with a form action on earthquake_form.html
 - Note: We will need to add a github card for the Geocoding API
 
+<<<<<<< HEAD
 ethanS -- 2024-12-09 11:00
 - Changed structure while working on integrating USGS API with main python file
+=======
+tanzeemH -- 2024-12-10 07:20
+- Wrote API implementation of each API using same standard format
+- Placed all APIs in one file
+- Note: We need to check if printing the API data from GoogleFonts, OpenWeather, and VisualCrossing work sicne they need keys
+>>>>>>> Tanzeem

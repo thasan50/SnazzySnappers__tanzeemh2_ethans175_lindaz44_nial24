@@ -5,11 +5,11 @@
 # Time Spent: x hours
 
 import random
-from flask import Flask, render_template, request, session, redirect, url_for, flash
 import os
 import sqlite3
 import sys
-# import database here
+from flask import Flask, render_template, request, session, redirect, url_for, flash
+# to import matplot lib
 import db
 import EarthquakeUSGS
 from APImodules import APIs

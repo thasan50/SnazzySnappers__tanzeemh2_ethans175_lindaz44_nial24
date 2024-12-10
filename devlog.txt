@@ -88,7 +88,12 @@ ethanS -- 2024-12-08 14:09
 
 ethanS -- 2024-12-09 11:00
 - Changed structure while working on integrating USGS API with main python file
+
 tanzeemH -- 2024-12-10 07:20
 - Wrote API implementation of each API using same standard format
 - Placed all APIs in one file
 - Note: We need to check if printing the API data from GoogleFonts, OpenWeather, and VisualCrossing work sicne they need keys
+
+ethanS -- 2024-12-10 11:00
+- Integrated code from EarthquakeUSGS into API python file
+- Successfully redirected new html templates for earthquake display

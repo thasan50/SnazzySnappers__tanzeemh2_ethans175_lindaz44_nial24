@@ -10,7 +10,7 @@ from urllib.request import Request, urlopen
 
 def fetch_worldpop_data(country_iso3):
     url = f"https://hub.worldpop.org/rest/data/pop/wpgp?iso3={country_iso3}"
-    headers = {"User-Agent": "Mozilla/5.0"} 
+    headers = {"User-Agent": "Mozilla/5.0"}
     try:
         request = Request(url, headers=headers)
         response = urlopen(request)
@@ -21,7 +21,7 @@ def fetch_worldpop_data(country_iso3):
 
 def fetch_google_fonts():
     key_file_path = os.path.join("keys", "key_GoogleFonts.txt")
-    
+
     try:
         with open(key_file_path, "r") as file:
             api_key = file.read().strip()
@@ -38,7 +38,7 @@ def fetch_google_fonts():
         else:
             print(f"Error: Unable to fetch data (Status code: {response.status_code})")
             print(f"Response: {response.text}")
-    
+
     except FileNotFoundError:
         print(f"Error: The file '{key_file_path}' was not found. Please create it and add your API key.")
     except ValueError as ve:
@@ -57,16 +57,16 @@ def fetch_openweather_data(city_name):
         params = {
             "q": city_name,
             "appid": api_key,
-            "units": "metric"  
+            "units": "metric"
         }
-        response = requests.get(url, params=params) 
+        response = requests.get(url, params=params)
         if response.status_code == 200:
             weather_data = response.json()
             print(json.dumps(weather_data, indent=4))
         else:
             print(f"Error: Unable to fetch data (Status code: {response.status_code})")
             print(f"Response: {response.text}")
-    
+
     except FileNotFoundError:
         print(f"Error: The file '{key_file_path}' was not found. Please create it and add your API key.")
     except ValueError as ve:
@@ -85,7 +85,7 @@ def fetch_visualcrossing_data(location):
         full_url = f"{url}/{location}"
         params = {
             "key": api_key,
-            "unitGroup": "metric"  
+            "unitGroup": "metric"
         }
         response = requests.get(full_url, params=params)
         if response.status_code == 200:
@@ -94,7 +94,7 @@ def fetch_visualcrossing_data(location):
         else:
             print(f"Error: Unable to fetch data (Status code: {response.status_code})")
             print(f"Response: {response.text}")
-    
+
     except FileNotFoundError:
         print(f"Error: The file '{key_file_path}' was not found. Please create it and add your API key.")
     except ValueError as ve:

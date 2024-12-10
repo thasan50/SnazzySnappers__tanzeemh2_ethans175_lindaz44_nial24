@@ -9,19 +9,13 @@ import urllib.parse
 import urllib.request
 import json
 
-app = Flask(__name__)
+def get_earthquake_data_by_place(place):
+    USGS_API_URL = "https://earthquake.usgs.gov/fdsnws/event/1/query"
+    GEOCODING_API_URL = "https://nominatim.openstreetmap.org/search"
 
-USGS_API_URL = "https://earthquake.usgs.gov/fdsnws/event/1/query"
-GEOCODING_API_URL = "https://nominatim.openstreetmap.org/search" # NEED TO ADD A CARD FOR THIS
-
-def home():
-    return render_template("earthquake_form.html")
-
-def get_earthquake_data_by_place():
-    place = request.args.get("place", "New York")
+    place = request.args.get("place", None)
     if not place:
         return jsonify({"error": "Place is required"}), 400
-
     # Fetch latitude and longitude for the place
     geocode_params = {
         "q": place,
@@ -63,6 +57,3 @@ def get_earthquake_data_by_place():
         return jsonify({"error": f"Earthquake API failed: {e}"}), 500
 
     return jsonify(earthquake_data)
-
-if __name__ == '__main__':
-    app.run(debug=True)

@@ -48,13 +48,13 @@ def auth_login():
             flash("Incorrect username or password.", 'error')
             return redirect("/login")
 
-@app.route("/earthquake_form", methods=['GET', 'POST'])
+@app.route("/earthquake", methods=['GET', 'POST'])
 def earthquake_form():
-    return EarthquakeUSGS.home()
+    return render_template("earthquake.html")
 
-@app.route("/earthquakes_display", methods=['GET', 'POST'])
+@app.route("/earthquake_display", methods=['GET', 'POST'])
 def earthquake_display():
-    return EarthquakeUSFS.get_earthquake_data_by_place()
+    return EarthquakeUSGS.get_earthquake_data_by_place(place)
 
 @app.route("/registration", methods=['GET', 'POST'])
 def registration():
@@ -87,9 +87,7 @@ def view():
 @app.route("/history")
 def history():
     return render_template('history.html')
-@app.route("/natural_disaster")
-def disaster():
-    return render_template('disaster.html')
+
 @app.route("/user_history")
 def user_history():
     return render_template('user_history.html')

@@ -101,9 +101,3 @@ def fetch_visualcrossing_data(location):
         print(f"Error: {ve}")
     except requests.exceptions.RequestException as e:
         print(f"An error occurred: {e}")
-
-# Example usage
-# fetch_worldpop_data("AUS")  # Replace 'AUS' with the ISO3 code of another country
-# fetch_google_fonts() # Don't need a specific thing, prints all fonts
-# fetch_openweather_data("London") # Replace London with city of choice
-# fetch_visualcrossing_data("New York") # Replace New York with city of choice

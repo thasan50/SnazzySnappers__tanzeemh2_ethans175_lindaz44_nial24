@@ -86,3 +86,7 @@ ethanS -- 2024-12-08 14:09
 - Made interactive with a form action on shakemap_form.html
 - Note: We will need to add a github card for the Geocoding API
 
+tanzeemH -- 2024-12-10 07:20
+- Wrote API implementation of each API using same standard format
+- Placed all APIs in one file
+- Note: We need to check if printing the API data from GoogleFonts, OpenWeather, and VisualCrossing work sicne they need keys

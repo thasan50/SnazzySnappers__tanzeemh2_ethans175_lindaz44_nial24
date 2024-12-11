@@ -88,6 +88,7 @@ def logout():
 
 @app.route("/view_city")
 def view():
+    fetch_city_pop("San Francisco")
     return render_template("view.html")
 # # This should contain a button to redirect into /history page
 @app.route("/history")

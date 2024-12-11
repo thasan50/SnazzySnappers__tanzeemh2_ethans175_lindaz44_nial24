@@ -116,7 +116,7 @@ def fetch_earthquake_data(username):
     geocode_params = {
         "q": place,
         "format": "json",  # Response format
-        "limit": 0         # Only fetch the first result
+        "limit": 1         # Only fetch the first result
     }
     geocode_query = urllib.parse.urlencode(geocode_params)
     geocode_url = f"{GEOCODING_API_URL}?{geocode_query}"

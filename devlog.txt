@@ -97,3 +97,7 @@ tanzeemH -- 2024-12-10 07:20
 ethanS -- 2024-12-10 11:00
 - Integrated code from EarthquakeUSGS into API python file
 - Successfully redirected new html templates for earthquake display
+
+ethanS -- 2024-12-11 10:59
+- Integrated Earthquake USGS data into database
+- Started creating an API card for geocoding json from nominatim API

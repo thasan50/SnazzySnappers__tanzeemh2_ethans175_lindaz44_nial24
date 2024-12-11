@@ -51,11 +51,16 @@ def auth_login():
 
 @app.route("/earthquake", methods=['GET', 'POST'])
 def earthquake_form():
+    if 'username' not in session:
+        return redirect('/')
     return render_template("earthquake.html")
 
 @app.route("/earthquake_display", methods=['GET', 'POST'])
 def earthquake_display():
-    return APIs.fetch_earthquake_data()
+    if 'username' not in session:
+        return redirect('/')
+    APIs.fetch_earthquake_data(session['username'])
+    return render_template('earthquake_display.html')
 
 @app.route("/registration", methods=['GET', 'POST'])
 def registration():

@@ -8,6 +8,7 @@ from flask import Flask, request, jsonify, render_template
 import urllib.parse
 import urllib.request
 import json
+import db
 
 def fetch_worldpop_data(country_iso3):
     url = f"https://hub.worldpop.org/rest/data/pop/wpgp?iso3={country_iso3}"
@@ -103,7 +104,7 @@ def fetch_visualcrossing_data(location):
     except requests.exceptions.RequestException as e:
         print(f"An error occurred: {e}")
 
-def fetch_earthquake_data():
+def fetch_earthquake_data(username):
     USGS_API_URL = "https://earthquake.usgs.gov/fdsnws/event/1/query"
     GEOCODING_API_URL = "https://nominatim.openstreetmap.org/search"
 
@@ -115,7 +116,7 @@ def fetch_earthquake_data():
     geocode_params = {
         "q": place,
         "format": "json",  # Response format
-        "limit": 1         # Only fetch the first result
+        "limit": 0         # Only fetch the first result
     }
     geocode_query = urllib.parse.urlencode(geocode_params)
     geocode_url = f"{GEOCODING_API_URL}?{geocode_query}"
@@ -150,5 +151,6 @@ def fetch_earthquake_data():
             earthquake_data = json.loads(response.read())
     except urllib.error.URLError as e:
         return jsonify({"error": f"Earthquake API failed: {e}"}), 500
+    features = earthquake_data.get('features')[0]
 
-    return jsonify(earthquake_data)
+    db.logEarthquakes(username, place, latitude, longitude, features['properties']['mag'], features['properties']['dmin'], features['properties']['title'])

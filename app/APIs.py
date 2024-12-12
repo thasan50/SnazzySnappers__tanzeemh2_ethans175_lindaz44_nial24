@@ -33,7 +33,7 @@ def fetch_city_pop(city_name):
         print(f"Error: The file '{key_file_path}' was not found. Please create it and add your API key.")
     except ValueError as ve:
         print(f"Error: {ve}")
-    except request.exceptions.RequestException as e:
+    except requests.exceptions.RequestException as e:
         print(f"An error occurred: {e}")
 
 def fetch_google_fonts():
@@ -47,7 +47,7 @@ def fetch_google_fonts():
         params = {
             "key": api_key
         }
-        response = request.get(url, params=params)
+        response = requests.get(url, params=params)
         if response.status_code == 200:
             fonts_data = response.json()
             print(json.dumps(fonts_data, indent=4))
@@ -59,7 +59,7 @@ def fetch_google_fonts():
         print(f"Error: The file '{key_file_path}' was not found. Please create it and add your API key.")
     except ValueError as ve:
         print(f"Error: {ve}")
-    except request.exceptions.RequestException as e:
+    except requests.exceptions.RequestException as e:
         print(f"An error occurred: {e}")
 
 def fetch_openweather_data(city_name):
@@ -75,7 +75,7 @@ def fetch_openweather_data(city_name):
             "appid": api_key,
             "units": "metric"
         }
-        response = request.get(url, params=params)
+        response = requests.get(url, params=params)
         if response.status_code == 200:
             weather_data = response.json()
             print(json.dumps(weather_data, indent=4))
@@ -87,7 +87,7 @@ def fetch_openweather_data(city_name):
         print(f"Error: The file '{key_file_path}' was not found. Please create it and add your API key.")
     except ValueError as ve:
         print(f"Error: {ve}")
-    except request.exceptions.RequestException as e:
+    except requests.exceptions.RequestException as e:
         print(f"An error occurred: {e}")
 
 def fetch_visualcrossing_data(location):
@@ -103,7 +103,7 @@ def fetch_visualcrossing_data(location):
             "key": api_key,
             "unitGroup": "metric"
         }
-        response = request.get(full_url, params=params)
+        response = requests.get(full_url, params=params)
         if response.status_code == 200:
             weather_data = response.json()
             print(json.dumps(weather_data, indent=4))
@@ -115,7 +115,7 @@ def fetch_visualcrossing_data(location):
         print(f"Error: The file '{key_file_path}' was not found. Please create it and add your API key.")
     except ValueError as ve:
         print(f"Error: {ve}")
-    except request.exceptions.RequestException as e:
+    except requests.exceptions.RequestException as e:
         print(f"An error occurred: {e}")
 
 def fetch_earthquake_data(username):

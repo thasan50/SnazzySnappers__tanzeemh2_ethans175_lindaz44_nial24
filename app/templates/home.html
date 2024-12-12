@@ -14,12 +14,12 @@
   </head>
   <body>
     Welcome {{username}}
-    <ul>
-        <li> View the current weather conditions of a specific city <a href="/view_city"> here <br></a></li>
-        <li> View the history of a region <a href="/history"> here <br> </a></li>
-        <li> View the earthquake map of a region <a href="/earthquake"> here <br></a></li>
-        <li> View {{username}}'s request history <a href="/user_history"> here </a></li>
-        <li> Click <a href="/logout">here</a> to logout!</li>
+    <ul class="flex bg-red-100 space-x-10 h-11 items-center">
+        <li><a class="flex hover:bg-green-100 p-3" href="/view_city"> current weather <br></a></li>
+        <li><a class="flex hover:bg-green-100 p-3" href="/history"> weather history <br> </a></li>
+        <li><a class="flex hover:bg-green-100 p-3" href="/earthquake"> earthquake map<br></a></li>
+        <li><a class="flex hover:bg-green-100 p-3" href="/user_history"> {{username}}'s request history </a></li>
+        <li><a class="flex hover:bg-green-100 p-3" href="/logout">logout</a></li>
     </ul>
   </body>
 </html>

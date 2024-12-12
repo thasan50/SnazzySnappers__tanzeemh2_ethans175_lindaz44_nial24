@@ -101,3 +101,15 @@ ethanS -- 2024-12-10 11:00
 ethanS -- 2024-12-11 10:59
 - Integrated Earthquake USGS data into database
 - Started creating an API card for geocoding json from nominatim API
+
+lindaZ -- 2024-12-10 10:55
+- Working on implementing fef in templates
+- Finished how to guide for matplotlibs
+
+lindaZ -- 2024-12-11 11:00
+- added entry.html to get the user's desired city for weather, earthquake etc.
+- Updated styling for home.html
+- added entry_multiple.html in case user submitted city that matches names of different places
+- ability for users to pick specific city give the option of multiple with similar names
+- ISSUES: 
+	-in db.py "request" is used instead of the intended "requests"

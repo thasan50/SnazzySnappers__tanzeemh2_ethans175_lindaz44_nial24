@@ -75,7 +75,7 @@ def entry():
         if(len(city_detail)==1): #user entered city matches one in api
             session['place'] = city_detail[0]['name']
             session['lat'] = city_detail[0]['lat']
-            session['long'] = city_detail[0]['lon']
+            session['lon'] = city_detail[0]['lon']
             return render_template("home.html", username = session['username'])
         else:
             #if there are multiple cities with same name

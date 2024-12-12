@@ -111,19 +111,23 @@ def possible_city(city_name):
     except requests.exceptions.RequestException as e:
         print(f"An error occurred: {e}")
 
-def fetch_visualcrossing_data(location):
+def fetch_visualcrossing_data(username, location_name):
     key_file_path = os.path.join("keys", "key_VisualCrossing.txt")
     try:
         with open(key_file_path, "r") as file:
             api_key = file.read().strip()
         if not api_key:
             raise ValueError("API key file is empty. Please add a valid API key.")
+        
         url = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline"
-        full_url = f"{url}/{location}"
+
+        full_url = f"{url}/{location_name}"
+
         params = {
             "key": api_key,
             "unitGroup": "metric"
         }
+        
         response = request.get(full_url, params=params)
         if response.status_code == 200:
             weather_data = response.json()
@@ -131,6 +135,33 @@ def fetch_visualcrossing_data(location):
         else:
             print(f"Error: Unable to fetch data (Status code: {response.status_code})")
             print(f"Response: {response.text}")
+
+        current_weather = weather_data.get("currentConditions", {})
+        latitude = weather_data.get("latitude")
+        longitude = weather_data.get("longitude")
+        temperature = current_weather.get("temp")
+        humidity = current_weather.get("humidity")
+        precipitation = current_weather.get("precip")
+        wind_speed = current_weather.get("windspeed")
+
+        db.logWeather(
+            username=username,
+            location_name=location_name,
+            latitude=latitude,
+            longitude=longitude,
+            temperature=temperature,
+            humidity=humidity,
+            precipitation=precipitation,
+            wind_speed=wind_speed,
+        )
+
+        return {
+            "location": location_name,
+            "temperature": temperature,
+            "humidity": humidity,
+            "precipitation": precipitation,
+            "wind_speed": wind_speed,
+        }
 
     except FileNotFoundError:
         print(f"Error: The file '{key_file_path}' was not found. Please create it and add your API key.")

@@ -5,13 +5,13 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://cdn.tailwindcss.com"></script>
-		<style type="text/tailwindcss">
-            @layer utilities {
-      	        .content-auto {
-      		        content-visibility: auto;
-      	        }
-            }
-		</style>
+    		<style type="text/tailwindcss">
+                @layer utilities {
+          	        .content-auto {
+          		        content-visibility: auto;
+          	        }
+                }
+    		</style>
     </head>
     <body class="bg-gradient-to-r from-cyan-100 to-purple-200">
         {% with messages = get_flashed_messages(with_categories=true) %}
@@ -29,9 +29,9 @@
                 <div class="flex justify-center m-10">
                     <button class="m-2 box-border p-2 border-3 bg-slate-100 rounded-xl hover:bg-fuchsia-300" type="submit">submit</button>
                 </div>
-                
+
             </form>
-            
+
         </div>
     </body>
 </html>

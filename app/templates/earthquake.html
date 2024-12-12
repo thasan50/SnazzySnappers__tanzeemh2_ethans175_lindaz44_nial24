@@ -3,9 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style type="text/tailwindcss">
+            @layer utilities {
+                .content-auto {
+                  content-visibility: auto;
+                }
+            }
+    </style>
     <title>Earthquake Data Finder</title>
 </head>
-<body>
+<body class="bg-gradient-to-r from-cyan-100 to-purple-200">
     <h1>Earthquake Data Finder</h1>
     <form action="/earthquake_display" method="get">
         <label for="place">Enter a location:</label>

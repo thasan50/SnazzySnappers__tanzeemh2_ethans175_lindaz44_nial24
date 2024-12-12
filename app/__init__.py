@@ -118,6 +118,8 @@ def earthquake_display():
     if 'username' not in session:
         return redirect('/')
     APIs.fetch_earthquake_data(session['username'])
+    print(db.getTableData("earthquakes", "location_name", "California"))
+
     return render_template('earthquake_display.html')
 
 @app.route("/registration", methods=['GET', 'POST'])

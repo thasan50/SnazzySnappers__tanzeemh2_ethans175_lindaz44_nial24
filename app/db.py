@@ -62,7 +62,7 @@ def updateUserHistory(username, search_type, current_time):
     userID = getUserID(username)
     c.execute("INSERT INTO userHistory (user_id, search_type, search_time) VALUES (?, ?, ?)", (userID, search_type, current_time))
     db.commit()
-    db.close()
+    db.close()valueType
 
 def logWeather(username, location_name, latitude, longitude, temperature, humidity, precipitation, wind_speed):
     db = sqlite3.connect(DB_FILE, check_same_thread=False)

@@ -7,12 +7,12 @@
 from flask import Flask, request, jsonify, render_template
 import urllib.parse
 import urllib.request
-import requests
 import json
 import db
 import os
 
 def fetch_city_pop(city_name):
+    key_file_path = os.path.join("keys", "key_APINinjaCity.txt")
     try:
         with open(key_file_path, "r") as file:
             api_key = file.read().strip()

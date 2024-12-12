@@ -7,8 +7,10 @@
 from flask import Flask, request, jsonify, render_template
 import urllib.parse
 import urllib.request
+import requests
 import json
 import db
+import os
 
 def fetch_city_pop(city_name):
     try:
@@ -83,6 +85,25 @@ def fetch_openweather_data(city_name):
             print(f"Error: Unable to fetch data (Status code: {response.status_code})")
             print(f"Response: {response.text}")
 
+    except FileNotFoundError:
+        print(f"Error: The file '{key_file_path}' was not found. Please create it and add your API key.")
+    except ValueError as ve:
+        print(f"Error: {ve}")
+    except requests.exceptions.RequestException as e:
+        print(f"An error occurred: {e}")
+
+def possible_city(city_name):
+    try:
+        with open("keys/key_OpenWeatherMap.txt", "r") as file:
+            api_key = file.read().strip()
+        if not api_key:
+            raise ValueError("API key file is empty. Please add a valid API key.")
+        with requests.get(f"http://api.openweathermap.org/geo/1.0/direct?q={city_name}&limit=5&appid={api_key}") as response:
+            if response.status_code == 200:
+                return response.json()
+            else:
+                print(f"Error: Unable to fetch data (Status code: {response.status_code})")
+                print(f"Response: {response.text}")
     except FileNotFoundError:
         print(f"Error: The file '{key_file_path}' was not found. Please create it and add your API key.")
     except ValueError as ve:

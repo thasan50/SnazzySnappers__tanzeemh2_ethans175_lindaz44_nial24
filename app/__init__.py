@@ -12,6 +12,7 @@ from flask import Flask, render_template, request, session, redirect, url_for, f
 # to import matplot lib
 import db
 import APIs
+import json
 
 DB_FILE = "db.py"
 app = Flask(__name__)
@@ -24,8 +25,11 @@ db.setup() # sets up databases
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
-    if 'username' in session:
+    if 'username' and 'place' in session:
         print(db.getTableData("users", "username", "Ethan"))
+        print(session['place'])
+        print(session['lon'])
+        print(session['lat'])
         return render_template("home.html", username = session['username'])
     else:
         return redirect("/login")
@@ -44,10 +48,64 @@ def auth_login():
 
         if db.getUserID(username) >= 0:
             session['username'] = username
+            if not('place' in session):
+                return redirect("/entry")
             return redirect('/')
         else:
             flash("Incorrect username or password.", 'error')
             return redirect("/login")
+
+@app.route("/entry", methods=['GET', 'POST'])
+def entry():
+    if not 'username' in session:
+        return redirect("/login")
+
+    if request.method == 'POST':
+        print(request.form)
+        location = request.form.get('place')
+        session['submittedPlace'] = location
+        city_detail = APIs.possible_city(location)
+        if city_detail is None:
+            flash("error getting data", 'error')
+            return render_template("entry.html")
+
+        if(len(city_detail)==0): #no matching city
+            flash("Enter another city", 'error')
+            return render_template("entry.html")
+        if(len(city_detail)==1): #user entered city matches one in api
+            session['place'] = city_detail[0]['name']
+            session['lat'] = city_detail[0]['lat']
+            session['lon'] = city_detail[0]['lon']
+            return render_template("home.html", username = session['username'])
+        else:
+            #if there are multiple cities with same name
+            all_city = ""
+            index = 0
+            print(city_detail)
+            for city in city_detail:
+                if "state" in city:
+                    state = city['state']
+                else:
+                    state = "none"
+                all_city+=(f'''<input type="radio" id="{city['lat']}" name="place" value={index} required> <label for="{city['lat']}"> {city['name']}, {state}, {city['country']}</label>''')
+                index+=1
+            return render_template("entry_multiple.html", cities=all_city)
+
+    return render_template("entry.html")
+
+@app.route("/entry_choose", methods=['GET', 'POST'])
+def match():
+    if not 'submittedPlace' in session:
+        return render_template("entry.html")
+    if request.method=='POST':
+        city_detail = APIs.possible_city(session['submittedPlace'])
+        index = int(request.form.get('place'))
+        session['place'] = city_detail[index]['name']
+        session['lat'] = city_detail[index]['lat']
+        session['lon'] = city_detail[index]['lon']
+        return redirect("/")
+    return render_template("entry_multiple.html", cities=all_city)
+
 
 @app.route("/earthquake", methods=['GET', 'POST'])
 def earthquake_form():
@@ -84,7 +142,8 @@ def auth_registration():
 def logout():
     session.pop('username', None)
     session.pop('name', None)
-    return redirect("/")
+    session.pop('place', None)
+    return redirect("/login")
 
 @app.route("/view_city")
 def view():

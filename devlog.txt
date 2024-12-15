@@ -113,3 +113,6 @@ lindaZ -- 2024-12-11 11:00
 - ability for users to pick specific city give the option of multiple with similar names
 - ISSUES: 
 	-in db.py "request" is used instead of the intended "requests"
+
+ethanS -- 2024-12-15 16:27
+- Created API card for nominatim API

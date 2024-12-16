@@ -10,7 +10,7 @@ import urllib.request
 import requests
 import json
 import db
-"""
+
 def fetch_google_fonts():
     with open("keys/key_GoogleFonts.txt", "r") as file:
         api_key = file.read().strip()
@@ -24,7 +24,7 @@ def fetch_google_fonts():
     if response.status_code == 200:
         fonts_data = response.json()
         print(json.dumps(fonts_data, indent=4))
-"""
+
 def fetch_city_pop(city_name):
     with open("keys/key_APINinjaCity.txt", "r") as file:
         api_key = file.read().strip()
@@ -53,23 +53,17 @@ def fetch_openweather(lat, lon):
         return response.json()
 
 def possible_city(city_name):
-    try:
-        with open("keys/key_OpenWeatherMap.txt", "r") as file:
-            api_key = file.read().strip()
-        if not api_key:
-            raise ValueError("API key file is empty. Please add a valid API key.")
-        with requests.get(f"http://api.openweathermap.org/geo/1.0/direct?q={city_name}&limit=5&appid={api_key}") as response:
-            if response.status_code == 200:
-                return response.json()
-            else:
-                print(f"Error: Unable to fetch data (Status code: {response.status_code})")
-                print(f"Response: {response.text}")
-    except ValueError as ve:
-        print(f"Error: {ve}")
-    except requests.exceptions.RequestException as e:
-        print(f"An error occurred: {e}")
+    with open("keys/key_OpenWeatherMap.txt", "r") as file:
+        api_key = file.read().strip()
+    if not api_key:
+        raise ValueError("API key file is empty. Please add a valid API key.")
+    with requests.get(f"http://api.openweathermap.org/geo/1.0/direct?q={city_name}&limit=5&appid={api_key}") as response:
+        if response.status_code == 200:
+            return response.json()
+        else:
+            print(f"Error: Unable to fetch data (Status code: {response.status_code})")
+            print(f"Response: {response.text}")
 
-"""
 def fetch_visualcrossing_data(location):
     try:
         with open("keys/key_VisualCrossing.txt", "r") as file:
@@ -145,4 +139,7 @@ def fetch_earthquake_data(username):
     features = earthquake_data.get('features')[0]
 
     db.logEarthquakes(username, place, latitude, longitude, features['properties']['mag'], features['properties']['dmin'], features['properties']['title'])
+<<<<<<< HEAD
 """
+=======
+>>>>>>> main

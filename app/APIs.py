@@ -7,44 +7,10 @@
 from flask import Flask, request, jsonify, render_template
 import urllib.parse
 import urllib.request
-<<<<<<< HEAD
-import json
-import db
-import os
-
-def fetch_city_pop(city_name):
-    key_file_path = os.path.join("keys", "key_APINinjaCity.txt")
-    try:
-        with open(key_file_path, "r") as file:
-            api_key = file.read().strip()
-        if not api_key:
-            raise ValueError("API key file is empty. Please add a valid API key.")
-        url = "https://api.api-ninjas.com/v1/"
-        params = {
-            "city": city_name,
-            "X-Api-Key": api_key
-        }
-        response = request.get(url, params = params)
-        if response.status_code == 200:
-            fonts_data = response.json()
-            print(json.dumps(city_data, indent=4))
-        else:
-            print(f"Error: Unable to fetch data (Status code: {response.status_code})")
-            print(f"Response: {response.text}")
-
-    except FileNotFoundError:
-        print(f"Error: The file '{key_file_path}' was not found. Please create it and add your API key.")
-    except ValueError as ve:
-        print(f"Error: {ve}")
-    except requests.exceptions.RequestException as e:
-        print(f"An error occurred: {e}")
-
-=======
 # import requests
 import json
 import db
 """
->>>>>>> main
 def fetch_google_fonts():
     with open("keys/key_GoogleFonts.txt", "r") as file:
         api_key = file.read().strip()

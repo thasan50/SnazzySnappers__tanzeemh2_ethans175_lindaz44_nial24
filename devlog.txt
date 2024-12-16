@@ -74,7 +74,7 @@ lindaZ -- 2024-12-05 21:21
 tanzeemH -- 2024-12-06 04:30
 - Verified requirements.txt
 - Created basic functions for each python route
-- Created additional templates (login.html) and updated text for each template, 
+- Created additional templates (login.html) and updated text for each template,
 allowing for use of python code and webpage navigation
 - Created login, auth_login, auth_registration, logout functions, updated registration function
 - Updated getUserID()
@@ -111,14 +111,13 @@ lindaZ -- 2024-12-11 11:00
 - Updated styling for home.html
 - added entry_multiple.html in case user submitted city that matches names of different places
 - ability for users to pick specific city give the option of multiple with similar names
-- ISSUES: 
+- ISSUES:
 	-in db.py "request" is used instead of the intended "requests"
 
 ethanS -- 2024-12-15 16:27
 - Created API card for nominatim API
 
 lindaZ -- 2024-12-16 00:11
-
 - Inserted data from openweather api into the database
 - Used matplotlib to generate graph with temperature data
 	* possible issue with file path? works for me currently though

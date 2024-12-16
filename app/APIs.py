@@ -10,7 +10,7 @@ import urllib.request
 import requests
 import json
 import db
-"""
+
 def fetch_google_fonts():
     with open("keys/key_GoogleFonts.txt", "r") as file:
         api_key = file.read().strip()
@@ -24,7 +24,7 @@ def fetch_google_fonts():
     if response.status_code == 200:
         fonts_data = response.json()
         print(json.dumps(fonts_data, indent=4))
-"""
+
 def fetch_city_pop(city_name):
     with open("keys/key_APINinjaCity.txt", "r") as file:
         api_key = file.read().strip()
@@ -64,7 +64,6 @@ def possible_city(city_name):
             print(f"Error: Unable to fetch data (Status code: {response.status_code})")
             print(f"Response: {response.text}")
 
-"""
 def fetch_visualcrossing_data(location):
     try:
         with open("keys/key_VisualCrossing.txt", "r") as file:
@@ -140,4 +139,3 @@ def fetch_earthquake_data(username):
     features = earthquake_data.get('features')[0]
 
     db.logEarthquakes(username, place, latitude, longitude, features['properties']['mag'], features['properties']['dmin'], features['properties']['title'])
-"""

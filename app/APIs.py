@@ -7,6 +7,7 @@
 from flask import Flask, request, jsonify, render_template
 import urllib.parse
 import urllib.request
+<<<<<<< HEAD
 import json
 import db
 import os
@@ -38,83 +39,74 @@ def fetch_city_pop(city_name):
     except requests.exceptions.RequestException as e:
         print(f"An error occurred: {e}")
 
+=======
+# import requests
+import json
+import db
+"""
+>>>>>>> main
 def fetch_google_fonts():
-    key_file_path = os.path.join("keys", "key_GoogleFonts.txt")
+    with open("keys/key_GoogleFonts.txt", "r") as file:
+        api_key = file.read().strip()
+    if not api_key:
+        raise ValueError("API key file is empty. Please add a valid API key.")
+    url = "https://www.googleapis.com/webfonts/v1/webfonts"
+    params = {
+        "key": api_key
+    }
+    response = requests.get(url, params=params)
+    if response.status_code == 200:
+        fonts_data = response.json()
+        print(json.dumps(fonts_data, indent=4))
+"""
+def fetch_city_pop(city_name):
+    with open("keys/key_APINinjaCity.txt", "r") as file:
+        api_key = file.read().strip()
+    if not api_key:
+        raise ValueError("API key file is empty. Please add a valid API key.")
+
+    api_url = f'https://api.api-ninjas.com/v1/city?name={city_name}'
+    request = urllib.request.Request(api_url)
+    request.add_header('X-Api-Key', api_key)
     try:
-        with open(key_file_path, "r") as file:
-            api_key = file.read().strip()
-        if not api_key:
-            raise ValueError("API key file is empty. Please add a valid API key.")
-        url = "https://www.googleapis.com/webfonts/v1/webfonts"
-        params = {
-            "key": api_key
-        }
-        response = requests.get(url, params=params)
-        if response.status_code == 200:
-            fonts_data = response.json()
-            print(json.dumps(fonts_data, indent=4))
-        else:
-            print(f"Error: Unable to fetch data (Status code: {response.status_code})")
-            print(f"Response: {response.text}")
-
-    except FileNotFoundError:
-        print(f"Error: The file '{key_file_path}' was not found. Please create it and add your API key.")
-    except ValueError as ve:
-        print(f"Error: {ve}")
-    except requests.exceptions.RequestException as e:
-        print(f"An error occurred: {e}")
-
-def fetch_openweather_data(city_name):
-    key_file_path = os.path.join("keys", "key_OpenWeather.txt")
-    try:
-        with open(key_file_path, "r") as file:
-            api_key = file.read().strip()
-        if not api_key:
-            raise ValueError("API key file is empty. Please add a valid API key.")
-        url = "https://api.openweathermap.org/data/2.5/weather"
-        params = {
-            "q": city_name,
-            "appid": api_key,
-            "units": "metric"
-        }
-        response = requests.get(url, params=params)
-        if response.status_code == 200:
-            weather_data = response.json()
-            print(json.dumps(weather_data, indent=4))
-        else:
-            print(f"Error: Unable to fetch data (Status code: {response.status_code})")
-            print(f"Response: {response.text}")
-
-    except FileNotFoundError:
-        print(f"Error: The file '{key_file_path}' was not found. Please create it and add your API key.")
-    except ValueError as ve:
-        print(f"Error: {ve}")
-    except requests.exceptions.RequestException as e:
-        print(f"An error occurred: {e}")
-
-def possible_city(city_name):
-    try:
-        with open("keys/key_OpenWeatherMap.txt", "r") as file:
-            api_key = file.read().strip()
-        if not api_key:
-            raise ValueError("API key file is empty. Please add a valid API key.")
-        with requests.get(f"http://api.openweathermap.org/geo/1.0/direct?q={city_name}&limit=5&appid={api_key}") as response:
-            if response.status_code == 200:
-                return response.json()
+        with urllib.request.urlopen(request) as response:
+            if response.status == 200:
+                print(response.read().decode('utf-8'))
             else:
-                print(f"Error: Unable to fetch data (Status code: {response.status_code})")
-                print(f"Response: {response.text}")
-    except FileNotFoundError:
-        print(f"Error: The file '{key_file_path}' was not found. Please create it and add your API key.")
-    except ValueError as ve:
-        print(f"Error: {ve}")
-    except requests.exceptions.RequestException as e:
-        print(f"An error occurred: {e}")
+                print("Error:", response.status, response.reason)
+    except urllib.error.URLError as e:
+        print("Failed to fetch data:", e)
 
+# def fetch_openweather(lat, lon):
+#     with open("keys/key_OpenWeatherMap.txt", "r") as file:
+#         api_key = file.read().strip()
+#     if not api_key:
+#         raise ValueError("API key file is empty. Please add a valid API key.")
+#     response = requests.get(f'''http://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&cnt=40&units=imperial&appid={api_key}''')
+#     if response.status_code == 200:
+#         return response.json()
+
+# def possible_city(city_name):
+#     try:
+#         with open("keys/key_OpenWeatherMap.txt", "r") as file:
+#             api_key = file.read().strip()
+#         if not api_key:
+#             raise ValueError("API key file is empty. Please add a valid API key.")
+#         with requests.get(f"http://api.openweathermap.org/geo/1.0/direct?q={city_name}&limit=5&appid={api_key}") as response:
+#             if response.status_code == 200:
+#                 return response.json()
+#             else:
+#                 print(f"Error: Unable to fetch data (Status code: {response.status_code})")
+#                 print(f"Response: {response.text}")
+#     except ValueError as ve:
+#         print(f"Error: {ve}")
+#     except requests.exceptions.RequestException as e:
+#         print(f"An error occurred: {e}")
+
+"""
 def fetch_visualcrossing_data(location):
-    key_file_path = os.path.join("keys", "key_VisualCrossing.txt")
     try:
-        with open(key_file_path, "r") as file:
+        with open("keys/key_VisualCrossing.txt", "r") as file:
             api_key = file.read().strip()
         if not api_key:
             raise ValueError("API key file is empty. Please add a valid API key.")
@@ -132,8 +124,6 @@ def fetch_visualcrossing_data(location):
             print(f"Error: Unable to fetch data (Status code: {response.status_code})")
             print(f"Response: {response.text}")
 
-    except FileNotFoundError:
-        print(f"Error: The file '{key_file_path}' was not found. Please create it and add your API key.")
     except ValueError as ve:
         print(f"Error: {ve}")
     except requests.exceptions.RequestException as e:
@@ -189,3 +179,4 @@ def fetch_earthquake_data(username):
     features = earthquake_data.get('features')[0]
 
     db.logEarthquakes(username, place, latitude, longitude, features['properties']['mag'], features['properties']['dmin'], features['properties']['title'])
+"""

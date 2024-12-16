@@ -13,6 +13,9 @@ from flask import Flask, render_template, request, session, redirect, url_for, f
 import db
 import APIs
 import json
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 
 DB_FILE = "db.py"
 app = Flask(__name__)
@@ -25,11 +28,33 @@ db.setup() # sets up databases
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
+    db.setup()
     if 'username' and 'place' in session:
         print(db.getTableData("users", "username", "Ethan"))
         print(session['place'])
         print(session['lon'])
         print(session['lat'])
+
+        #generate plot
+        beegFile = APIs.fetch_openweather(session['lat'], session['lon'])
+        weatherData = beegFile['list']
+        db.resetWeather()
+        num=0
+        for row in weatherData:
+            db.logWeather(num, session['username'], session['place'], session['lat'], session['lon'], float(row['main']['temp']), float(row['main']['humidity']), row['weather'][0]['main'], float(row['wind']['speed']))
+            num+=1
+        plt.figure()
+        a = db.getWeather()
+        for row in a:
+            x = row[0]
+            y = row[5]
+            plt.plot(x,y,'ro-')
+        plt.xlabel("intervals")
+        plt.ylabel("temperature")
+        plt.tight_layout()
+        
+        plt.savefig('static/goo.png')
+        print(db.getWeather())
         return render_template("home.html", username = session['username'])
     else:
         return redirect("/login")
@@ -74,8 +99,8 @@ def entry():
             return render_template("entry.html")
         if(len(city_detail)==1): #user entered city matches one in api
             session['place'] = city_detail[0]['name']
-            session['lat'] = city_detail[0]['lat']
-            session['lon'] = city_detail[0]['lon']
+            session['lat'] = float(city_detail[0]['lat'])
+            session['lon'] = float(city_detail[0]['lon'])
             return render_template("home.html", username = session['username'])
         else:
             #if there are multiple cities with same name
@@ -101,8 +126,8 @@ def match():
         city_detail = APIs.possible_city(session['submittedPlace'])
         index = int(request.form.get('place'))
         session['place'] = city_detail[index]['name']
-        session['lat'] = city_detail[index]['lat']
-        session['lon'] = city_detail[index]['lon']
+        session['lat'] = float(city_detail[index]['lat'])
+        session['lon'] = float(city_detail[index]['lon'])
         return redirect("/")
     return render_template("entry_multiple.html", cities=all_city)
 
@@ -147,13 +172,42 @@ def logout():
     session.pop('place', None)
     return redirect("/login")
 
-@app.route("/view_city")
-def view():
-    APIs.fetch_city_pop("San Francisco")
+@app.route("/weather")
+def weather():
+    '''
+    #for testing
+    session['username'] = "hi"
+    session['place'] = 'london'
+    session['lat'] = 51.5073219
+    session['lon'] = -0.1276474
+    '''
+
+    beegFile = APIs.fetch_openweather(session['lat'], session['lon'])
+    weatherData = beegFile['list']
+    db.resetWeather()
+    num = 0
+    for row in weatherData:
+        db.logWeather(num, session['username'], session['place'], session['lat'], session['lon'], float(row['main']['temp']), float(row['main']['humidity']), row['weather'][0]['main'], float(row['wind']['speed']))
+        num+=1
+    plt.figure()
+    a = db.getWeather()
+    for row in a:
+        x = row[0]
+        y = row[5]
+        plt.plot(x,y,'ro-')
+    plt.xlabel("intervals")
+    plt.ylabel("temperature")
+    plt.tight_layout()
+    
+    plt.savefig('static/goo.png')
+    print(db.getWeather())
     return render_template("view.html")
+
+
 # # This should contain a button to redirect into /history page
 @app.route("/history")
 def history():
+    APIs.fetch_city_pop("Chicago")
     return render_template('history.html')
 
 @app.route("/user_history")

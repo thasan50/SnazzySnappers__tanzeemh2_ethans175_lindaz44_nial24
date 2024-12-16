@@ -16,11 +16,11 @@ def setup():
     # main difference from DD is the integer primary key that autoincrements for each database
     # these are unique per DB, but the DBs are still connected through userID and search_type
     # note that we may want to create another column to detail the timestamps of the data itself from the APIs
-    c.execute("CREATE TABLE users (user_id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, password TEXT, created_at TEXT, last_login TEXT);")
-    c.execute("CREATE TABLE userHistory (history_id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER, search_type TEXT, search_time TEXT);")
-    c.execute("CREATE TABLE weather (weather_id INTEGER PRIMARY KEY AUTOINCREMENT, location_name TEXT, latitude REAL, longitude REAL, temperature REAL, humidity INTEGER, precipitation REAL, wind_speed REAL, search_time TEXT);")
-    c.execute("CREATE TABLE weatherHistory (history_id INTEGER PRIMARY KEY AUTOINCREMENT, location_name TEXT, latitude REAL, longitude REAL, year INTEGER, avg_temperature REAL, avg_precipitation REAL, high_temperature REAL, low_temperature REAL, search_time TEXT);")
-    c.execute("CREATE TABLE earthquakes (earthquake_id INTEGER PRIMARY KEY AUTOINCREMENT, location_name TEXT, latitude REAL, longitude REAL, magnitude REAL, depth REAL, description TEXT, search_time TEXT);")
+    c.execute("CREATE TABLE IF NOT EXISTS users (user_id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, password TEXT, created_at TEXT, last_login TEXT);")
+    c.execute("CREATE TABLE IF NOT EXISTS userHistory (history_id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER, search_type TEXT, search_time TEXT);")
+    c.execute("CREATE TABLE IF NOT EXISTS weather (weather_id INTEGER PRIMARY KEY, location_name TEXT, latitude REAL, longitude REAL, temperature REAL, humidity INTEGER, weather TEXT, wind_speed REAL, search_time TEXT);")
+    c.execute("CREATE TABLE IF NOT EXISTS weatherHistory (history_id INTEGER PRIMARY KEY AUTOINCREMENT, location_name TEXT, latitude REAL, longitude REAL, year INTEGER, avg_temperature REAL, avg_precipitation REAL, high_temperature REAL, low_temperature REAL, search_time TEXT);")
+    c.execute("CREATE TABLE IF NOT EXISTS earthquakes (earthquake_id INTEGER PRIMARY KEY AUTOINCREMENT, location_name TEXT, latitude REAL, longitude REAL, magnitude REAL, depth REAL, description TEXT, search_time TEXT);")
     db.commit()
     db.close()
 
@@ -64,12 +64,12 @@ def updateUserHistory(username, search_type, current_time):
     db.commit()
     db.close()valueType
 
-def logWeather(username, location_name, latitude, longitude, temperature, humidity, precipitation, wind_speed):
+def logWeather(weather_id, username, location_name, latitude, longitude, temperature, humidity, weather, wind_speed):
     db = sqlite3.connect(DB_FILE, check_same_thread=False)
     c = db.cursor()
     current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     updateUserHistory(username, "weather", current_time)
-    c.execute("INSERT INTO weather (location_name, latitude, longitude, temperature, humidity, precipitation, wind_speed, search_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (location_name, latitude, longitude, temperature, humidity, precipitation, wind_speed, current_time))
+    c.execute("INSERT INTO weather (weather_id, location_name, latitude, longitude, temperature, humidity, weather, wind_speed, search_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", (weather_id, location_name, latitude, longitude, temperature, humidity, weather, wind_speed, current_time))
     db.commit()
     db.close()
 
@@ -105,3 +105,18 @@ def getTableData(table, valueType, value):
         return result
     else:
         return -1
+
+def getWeather():
+    db = sqlite3.connect(DB_FILE, check_same_thread=False)
+    c = db.cursor()
+    c.execute("SELECT * from weather")
+    a = c.fetchall()
+    db.close()
+    return a
+
+def resetWeather():
+    db = sqlite3.connect(DB_FILE, check_same_thread=False)
+    c = db.cursor()
+    c.execute("DELETE FROM weather")
+    db.commit()
+    db.close()

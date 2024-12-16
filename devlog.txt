@@ -113,3 +113,12 @@ lindaZ -- 2024-12-11 11:00
 - ability for users to pick specific city give the option of multiple with similar names
 - ISSUES: 
 	-in db.py "request" is used instead of the intended "requests"
+
+ethanS -- 2024-12-15 16:27
+- Created API card for nominatim API
+
+lindaZ -- 2024-12-16 00:11
+
+- Inserted data from openweather api into the database
+- Used matplotlib to generate graph with temperature data
+	* possible issue with file path? works for me currently though

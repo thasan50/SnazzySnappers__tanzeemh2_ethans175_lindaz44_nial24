@@ -205,6 +205,7 @@ def weather():
 # # This should contain a button to redirect into /history page
 @app.route("/history")
 def history():
+    APIs.fetch_city_pop("Chicago")
     return render_template('history.html')
 
 @app.route("/user_history")

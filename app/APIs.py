@@ -7,34 +7,10 @@
 from flask import Flask, request, jsonify, render_template
 import urllib.parse
 import urllib.request
-import requests
+# import requests
 import json
 import db
 """
-def fetch_city_pop(city_name):
-    try:
-        with open("keys/key_WorldPop.txt", "r") as file:
-            api_key = file.read().strip()
-        if not api_key:
-            raise ValueError("API key file is empty. Please add a valid API key.")
-        url = "https://api.api-ninjas.com/v1/"
-        params = {
-            "city": city_name,
-            "X-Api-Key": api_key
-        }
-        response = request.get(url, params = params)
-        if response.status_code == 200:
-            fonts_data = response.json()
-            print(json.dumps(city_data, indent=4))
-        else:
-            print(f"Error: Unable to fetch data (Status code: {response.status_code})")
-            print(f"Response: {response.text}")
-
-    except ValueError as ve:
-        print(f"Error: {ve}")
-    except requests.exceptions.RequestException as e:
-        print(f"An error occurred: {e}")
-
 def fetch_google_fonts():
     with open("keys/key_GoogleFonts.txt", "r") as file:
         api_key = file.read().strip()
@@ -49,31 +25,49 @@ def fetch_google_fonts():
         fonts_data = response.json()
         print(json.dumps(fonts_data, indent=4))
 """
-def fetch_openweather(lat, lon):
-    with open("keys/key_OpenWeatherMap.txt", "r") as file:
+def fetch_city_pop(city_name):
+    with open("keys/key_APINinjaCity.txt", "r") as file:
         api_key = file.read().strip()
     if not api_key:
         raise ValueError("API key file is empty. Please add a valid API key.")
-    response = requests.get(f'''http://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&cnt=40&units=imperial&appid={api_key}''')
-    if response.status_code == 200:
-        return response.json()
 
-def possible_city(city_name):
+    api_url = f'https://api.api-ninjas.com/v1/city?name={city_name}'
+    request = urllib.request.Request(api_url)
+    request.add_header('X-Api-Key', api_key)
     try:
-        with open("keys/key_OpenWeatherMap.txt", "r") as file:
-            api_key = file.read().strip()
-        if not api_key:
-            raise ValueError("API key file is empty. Please add a valid API key.")
-        with requests.get(f"http://api.openweathermap.org/geo/1.0/direct?q={city_name}&limit=5&appid={api_key}") as response:
-            if response.status_code == 200:
-                return response.json()
+        with urllib.request.urlopen(request) as response:
+            if response.status == 200:
+                print(response.read().decode('utf-8'))
             else:
-                print(f"Error: Unable to fetch data (Status code: {response.status_code})")
-                print(f"Response: {response.text}")
-    except ValueError as ve:
-        print(f"Error: {ve}")
-    except requests.exceptions.RequestException as e:
-        print(f"An error occurred: {e}")
+                print("Error:", response.status, response.reason)
+    except urllib.error.URLError as e:
+        print("Failed to fetch data:", e)
+
+# def fetch_openweather(lat, lon):
+#     with open("keys/key_OpenWeatherMap.txt", "r") as file:
+#         api_key = file.read().strip()
+#     if not api_key:
+#         raise ValueError("API key file is empty. Please add a valid API key.")
+#     response = requests.get(f'''http://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&cnt=40&units=imperial&appid={api_key}''')
+#     if response.status_code == 200:
+#         return response.json()
+
+# def possible_city(city_name):
+#     try:
+#         with open("keys/key_OpenWeatherMap.txt", "r") as file:
+#             api_key = file.read().strip()
+#         if not api_key:
+#             raise ValueError("API key file is empty. Please add a valid API key.")
+#         with requests.get(f"http://api.openweathermap.org/geo/1.0/direct?q={city_name}&limit=5&appid={api_key}") as response:
+#             if response.status_code == 200:
+#                 return response.json()
+#             else:
+#                 print(f"Error: Unable to fetch data (Status code: {response.status_code})")
+#                 print(f"Response: {response.text}")
+#     except ValueError as ve:
+#         print(f"Error: {ve}")
+#     except requests.exceptions.RequestException as e:
+#         print(f"An error occurred: {e}")
 
 """
 def fetch_visualcrossing_data(location):

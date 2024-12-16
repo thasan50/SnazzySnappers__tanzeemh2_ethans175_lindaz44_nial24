@@ -52,8 +52,8 @@ def home():
         plt.xlabel("intervals")
         plt.ylabel("temperature")
         plt.tight_layout()
-        
-        plt.savefig('static/goo.png')
+
+        # plt.savefig('static/goo.png')
         print(db.getWeather())
         return render_template("home.html", username = session['username'])
     else:
@@ -198,7 +198,7 @@ def weather():
     plt.xlabel("intervals")
     plt.ylabel("temperature")
     plt.tight_layout()
-    
+
     plt.savefig('static/goo.png')
     print(db.getWeather())
     return render_template("view.html")

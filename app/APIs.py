@@ -7,7 +7,7 @@
 from flask import Flask, request, jsonify, render_template
 import urllib.parse
 import urllib.request
-# import requests
+import requests
 import json
 import db
 """
@@ -43,31 +43,31 @@ def fetch_city_pop(city_name):
     except urllib.error.URLError as e:
         print("Failed to fetch data:", e)
 
-# def fetch_openweather(lat, lon):
-#     with open("keys/key_OpenWeatherMap.txt", "r") as file:
-#         api_key = file.read().strip()
-#     if not api_key:
-#         raise ValueError("API key file is empty. Please add a valid API key.")
-#     response = requests.get(f'''http://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&cnt=40&units=imperial&appid={api_key}''')
-#     if response.status_code == 200:
-#         return response.json()
+def fetch_openweather(lat, lon):
+    with open("keys/key_OpenWeatherMap.txt", "r") as file:
+        api_key = file.read().strip()
+    if not api_key:
+        raise ValueError("API key file is empty. Please add a valid API key.")
+    response = requests.get(f'''http://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&cnt=40&units=imperial&appid={api_key}''')
+    if response.status_code == 200:
+        return response.json()
 
-# def possible_city(city_name):
-#     try:
-#         with open("keys/key_OpenWeatherMap.txt", "r") as file:
-#             api_key = file.read().strip()
-#         if not api_key:
-#             raise ValueError("API key file is empty. Please add a valid API key.")
-#         with requests.get(f"http://api.openweathermap.org/geo/1.0/direct?q={city_name}&limit=5&appid={api_key}") as response:
-#             if response.status_code == 200:
-#                 return response.json()
-#             else:
-#                 print(f"Error: Unable to fetch data (Status code: {response.status_code})")
-#                 print(f"Response: {response.text}")
-#     except ValueError as ve:
-#         print(f"Error: {ve}")
-#     except requests.exceptions.RequestException as e:
-#         print(f"An error occurred: {e}")
+def possible_city(city_name):
+    try:
+        with open("keys/key_OpenWeatherMap.txt", "r") as file:
+            api_key = file.read().strip()
+        if not api_key:
+            raise ValueError("API key file is empty. Please add a valid API key.")
+        with requests.get(f"http://api.openweathermap.org/geo/1.0/direct?q={city_name}&limit=5&appid={api_key}") as response:
+            if response.status_code == 200:
+                return response.json()
+            else:
+                print(f"Error: Unable to fetch data (Status code: {response.status_code})")
+                print(f"Response: {response.text}")
+    except ValueError as ve:
+        print(f"Error: {ve}")
+    except requests.exceptions.RequestException as e:
+        print(f"An error occurred: {e}")
 
 """
 def fetch_visualcrossing_data(location):

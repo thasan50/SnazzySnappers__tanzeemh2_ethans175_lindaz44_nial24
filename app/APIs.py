@@ -139,7 +139,3 @@ def fetch_earthquake_data(username):
     features = earthquake_data.get('features')[0]
 
     db.logEarthquakes(username, place, latitude, longitude, features['properties']['mag'], features['properties']['dmin'], features['properties']['title'])
-<<<<<<< HEAD
-"""
-=======
->>>>>>> main

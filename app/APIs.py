@@ -94,14 +94,17 @@ def fetch_earthquake_data(username):
     GEOCODING_API_URL = "https://nominatim.openstreetmap.org/search"
 
     place = request.args.get("place", None)
+    year = request.args.get("year", None)
     if not place:
-        return jsonify({"error": "Place is required"}), 400
+        return {"error": "Place is required"}
+    if not year:
+        return {"error": "Year is required"}
 
     # Fetch latitude and longitude for the place
     geocode_params = {
         "q": place,
-        "format": "json",  # Response format
-        "limit": 1         # Only fetch the first result
+        "format": "json",
+        "limit": 1
     }
     geocode_query = urllib.parse.urlencode(geocode_params)
     geocode_url = f"{GEOCODING_API_URL}?{geocode_query}"
@@ -110,23 +113,24 @@ def fetch_earthquake_data(username):
         with urllib.request.urlopen(geocode_url) as response:
             geocode_data = json.loads(response.read())
             if not geocode_data:
-                return jsonify({"error": "Place not found"}), 404
+                return {"error": "Place not found"}
 
-            # Extract latitude and longitude
             latitude = geocode_data[0]["lat"]
             longitude = geocode_data[0]["lon"]
     except urllib.error.URLError as e:
-        return jsonify({"error": f"Geocoding failed: {e}"}), 500
+        return {"error": f"Geocoding failed: {e}"}
 
-    # Use the latitude and longitude to fetch earthquake data
+    # Fetch earthquake data
+    starttime = f"{year}-01-01"
+    endtime = f"{year}-12-31"
     earthquake_params = {
         "format": "geojson",
         "latitude": latitude,
         "longitude": longitude,
-        "maxradiuskm": request.args.get("maxradiuskm", "500"),
-        "starttime": request.args.get("starttime", "2024-01-01"),
-        "endtime": request.args.get("endtime", "2024-12-31"),
-        "minmagnitude": request.args.get("minmagnitude", "4.5"),
+        "maxradiuskm": 500,
+        "starttime": starttime,
+        "endtime": endtime,
+        "minmagnitude": "4.5",
     }
     earthquake_query = urllib.parse.urlencode(earthquake_params)
     earthquake_url = f"{USGS_API_URL}?{earthquake_query}"
@@ -135,7 +139,22 @@ def fetch_earthquake_data(username):
         with urllib.request.urlopen(earthquake_url) as response:
             earthquake_data = json.loads(response.read())
     except urllib.error.URLError as e:
-        return jsonify({"error": f"Earthquake API failed: {e}"}), 500
-    features = earthquake_data.get('features')[0]
+        return {"error": f"Earthquake API failed: {e}"}
 
-    db.logEarthquakes(username, place, latitude, longitude, features['properties']['mag'], features['properties']['dmin'], features['properties']['title'])
+    # Parse earthquake data
+    features = earthquake_data.get('features', [])
+    if not features:
+        return {"error": "No earthquake data found"}
+
+    earthquakes = [
+        {
+            "place": feature["properties"]["place"],
+            "lat": feature["geometry"]["coordinates"][1],
+            "lon": feature["geometry"]["coordinates"][0],
+            "magnitude": feature["properties"]["mag"],
+            "depth": feature["geometry"]["coordinates"][2],
+            "description": feature["properties"]["title"],
+        }
+        for feature in features
+    ]
+    return earthquakes

@@ -28,7 +28,44 @@
 
   <div class="h-screen flex items-center justify-center">
       <h1>Earthquake Data Display</h1>
+      <div>
+        <label for="yearSlider" class="block mb-2 text-lg">Select Year: <span id="selectedYear">{{year}}</span></label>
+        <input type="range" id="yearSlider" min="2000" max="2024" value="{{year}}" class="w-full mb-6">
+    </div>
+    {% if error %}
+      <div class="error-message">
+        <p>{{error}}</p>
+      </div>
+    {% else %}
+    <!-- Data Display -->
+    <div id="dataDisplay" class="bg-white p-4 shadow rounded w-2/3">
+      {% if earthquake_data %}
+        <ul class="list-disc ml-6">
+          {% for quake in earthquake_data %}
+          <li>
+            {{quake.place}} | Lat: {{quake.lat}}, Lon: {{quake.lon}}
+            | Mag: {{quake.magnitude}} | Depth: {{quake.depth}} km
+          </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>No earthquake data available for this year and location</p>
+      {% endif %}  
+    </div>
+    {% endif %}
   </div>
+  <script>
+    const yearSlider = document.getElementById("yearSlider");
+    const selectedYear = document.getElementById("selectedYear");
 
+    yearSlider.addEventListener("input", function () {
+        selectedYear.textContent = yearSlider.value;
+
+        // Reload the page with the selected year
+        const url = new URL(window.location.href);
+        url.searchParams.set("year", yearSlider.value);
+        window.location.href = url.toString();
+    });
+  </script>
 </body>
 </html>

@@ -92,7 +92,11 @@ ethanS -- 2024-12-09 11:00
 tanzeemH -- 2024-12-10 07:20
 - Wrote API implementation of each API using same standard format
 - Placed all APIs in one file
-- Note: We need to check if printing the API data from GoogleFonts, OpenWeather, and VisualCrossing work sicne they need keys
+- Note: We need to check if printing the API data from GoogleFonts, OpenWeather, and VisualCrossing work since they need keys
+
+lindaZ -- 2024-12-10 10:55
+- Working on implementing fef in templates
+- Finished how to guide for matplotlibs
 
 ethanS -- 2024-12-10 11:00
 - Integrated code from EarthquakeUSGS into API python file
@@ -102,10 +106,6 @@ ethanS -- 2024-12-11 10:59
 - Integrated Earthquake USGS data into database
 - Started creating an API card for geocoding json from nominatim API
 
-lindaZ -- 2024-12-10 10:55
-- Working on implementing fef in templates
-- Finished how to guide for matplotlibs
-
 lindaZ -- 2024-12-11 11:00
 - added entry.html to get the user's desired city for weather, earthquake etc.
 - Updated styling for home.html
@@ -114,6 +114,12 @@ lindaZ -- 2024-12-11 11:00
 - ISSUES:
 	-in db.py "request" is used instead of the intended "requests"
 
+tanzeemH --2024-12-11 11:01
+- Further updated requesting API functions
+
+tanzeemH -2024-12-12 10:55
+- Updated HTML and Tailwind CSS
+
 ethanS -- 2024-12-15 16:27
 - Created API card for nominatim API
 
@@ -121,6 +127,9 @@ lindaZ -- 2024-12-16 00:11
 - Inserted data from openweather api into the database
 - Used matplotlib to generate graph with temperature data
 	* possible issue with file path? works for me currently though
+
+tanzeemH -- 2024-12-16 10:55
+- Updated API functions, requirements, keys
 
 lindaZ -- 2024-12-16 22:02
 - Integrated dropdown menu for current weather forecasts
@@ -131,3 +140,10 @@ ethanS -- 2024-12-17 01:11
 - Added standard tailwind on each page
 - Completed userhistory page
 - Fixed database initialization
+
+tanzeemH -- 2024-12-17 05:33
+- Completed standard tailwind on earthquake page
+- Updated fetch_earthquake_data function to better handle errors and work with start and endtimes
+- Updated __init__.py to properly display requested data
+- Made an interactive slider to display earthquake data on HTML
+- Submitted API keys by google form

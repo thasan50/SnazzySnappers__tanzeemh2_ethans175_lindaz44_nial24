@@ -128,14 +128,19 @@ def match():
 def earthquake_form():
     if 'username' not in session:
         return redirect('/')
-    return render_template("earthquake.html")
+    return render_template("earthquake.html", username=session['username'])
 
 @app.route("/earthquake_display", methods=['GET', 'POST'])
 def earthquake_display():
     if 'username' not in session:
         return redirect('/')
+    place = request.args.get("place", "San Francisco")
+    year = request.args.get("year", "2024")
 
     earthquake_data = APIs.fetch_earthquake_data(session['username'])
+    if isinstance(earthquake_data, dict) and "error" in earthquake_data:
+        return render_template('earthquake_display.html', username=session['username'], error=earthquake_data['error'])
+    
     if earthquake_data:
         for quake in earthquake_data:
             db.logEarthquakes(
@@ -147,7 +152,12 @@ def earthquake_display():
                 quake['depth'],
                 quake['description']
             )
-    return render_template('earthquake_display.html')
+    
+    return render_template('earthquake_display.html', 
+        username=session['username'],
+        earthquake_data = earthquake_data,
+        year = year,
+        place = place)
 
 @app.route("/registration", methods=['GET', 'POST'])
 def registration():
@@ -217,8 +227,8 @@ def weather():
 # # This should contain a button to redirect into /history page
 @app.route("/history")
 def history():
-    APIs.fetch_city_pop("Chicago")
-    return render_template('history.html')
+    # APIs.fetch_city_pop("Chicago")
+    return render_template('history.html', username=session['username'])
 
 @app.route("/user_history")
 def user_history():

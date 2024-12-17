@@ -78,7 +78,8 @@ def logWeatherHistory(username, location_name, latitude, longitude, year, avg_te
     db = sqlite3.connect(DB_FILE, check_same_thread=False)
     c = db.cursor()
     current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    updateUserHistory(username, "weatherHistory", location_name, current_time)
+    if getTableData("userHistory", "search_time", current_time) == -1:
+        updateUserHistory(username, "weatherHistory", location_name, current_time)
     c.execute("INSERT INTO weatherHistory (location_name, latitude, longitude, year, avg_temperature, avg_precipitation, high_temperature, low_temperature, search_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", (location_name, latitude, longitude, year, avg_temperature, avg_precipitation, high_temperature, low_temperature, current_time))
     db.commit()
     db.close()
@@ -87,7 +88,8 @@ def logEarthquakes(username, location_name, latitude, longitude, magnitude, dept
     db = sqlite3.connect(DB_FILE, check_same_thread=False)
     c = db.cursor()
     current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    updateUserHistory(username, "earthquakes", location_name, current_time)
+    if getTableData("userHistory", "search_time", current_time) == -1:
+        updateUserHistory(username, "earthquakes", location_name, current_time)
     c.execute("INSERT INTO earthquakes (location_name, latitude, longitude, magnitude, depth, description, search_time) VALUES (?, ?, ?, ?, ?, ?, ?)", (location_name, latitude, longitude, magnitude, depth, description, current_time))
     db.commit()
     db.close()

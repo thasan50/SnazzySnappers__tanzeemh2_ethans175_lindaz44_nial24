@@ -89,6 +89,9 @@ ethanS -- 2024-12-08 14:09
 ethanS -- 2024-12-09 11:00
 - Changed structure while working on integrating USGS API with main python file
 
+niaL -- 2024-12-09 11:00
+- Worked on main structure of weather API db
+
 tanzeemH -- 2024-12-10 07:20
 - Wrote API implementation of each API using same standard format
 - Placed all APIs in one file
@@ -101,6 +104,14 @@ lindaZ -- 2024-12-10 10:55
 ethanS -- 2024-12-10 11:00
 - Integrated code from EarthquakeUSGS into API python file
 - Successfully redirected new html templates for earthquake display
+
+niaL -- 2024-12-10 11:00
+- Worked on weather db historical weather structure
+- Created pull request for how-to for datetime
+
+niaL -- 2024-12-11 21:34
+- Fixed paramter issues on weather db
+- Updated weather page template
 
 ethanS -- 2024-12-11 10:59
 - Integrated Earthquake USGS data into database
@@ -140,6 +151,9 @@ ethanS -- 2024-12-17 01:11
 - Added standard tailwind on each page
 - Completed userhistory page
 - Fixed database initialization
+
+niaL -- 2024-12-17 04:29
+- Adjusted input forms on weather HTML
 
 tanzeemH -- 2024-12-17 05:33
 - Completed standard tailwind on earthquake page

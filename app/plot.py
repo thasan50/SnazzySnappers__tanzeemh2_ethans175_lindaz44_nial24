@@ -9,9 +9,9 @@ def forecast():
     for row in a:
         x = row[0]
         y = row[4]
-        plt.plot(x,y,'ro-')
+        plt.stem(x,y,'ro')
     plt.xlabel("3-hour intervals")
-    plt.ylabel("temperature")
+    plt.ylabel("Temperature (farenheight)")
     plt.tight_layout()
     plt.savefig('static/goo.png')
 
@@ -21,9 +21,9 @@ def humidity():
     for row in a:
         x = row[0]
         y = row[5]
-        plt.plot(x,y,'bo-')
+        plt.stem(x,y,'bo')
     plt.xlabel("3-hour intervals")
-    plt.ylabel("humidity")
+    plt.ylabel("Humidity")
     plt.tight_layout()
     plt.savefig('static/foo.png')
 
@@ -33,8 +33,8 @@ def percipitation():
     for row in a:
         x = row[0]
         y = row[7]
-        plt.plot(x,y,'go-')
+        plt.stem(x,y,'go')
     plt.xlabel("3-hour intervals")
-    plt.ylabel("humidity")
+    plt.ylabel("Percipitations (inches)")
     plt.tight_layout()
     plt.savefig('static/boo.png')

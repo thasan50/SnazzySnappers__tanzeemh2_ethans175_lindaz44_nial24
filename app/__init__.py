@@ -95,7 +95,7 @@ def entry():
             session['place'] = city_detail[0]['name']
             session['lat'] = float(city_detail[0]['lat'])
             session['lon'] = float(city_detail[0]['lon'])
-            return render_template("home.html", username = session['username'], place = session['place'])
+            return redirect("/")
         else:
             #if there are multiple cities with same name
             all_city = ""

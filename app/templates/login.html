@@ -13,7 +13,7 @@
                 }
     		</style>
     </head>
-    <body class="bg-gradient-to-r from-cyan-100 to-purple-200">
+    <body class="font-mono bg-gradient-to-r from-cyan-100 to-purple-200">
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             {% for category, message in messages %}
@@ -30,8 +30,8 @@
                 <label for="password">Password:</label>
                 <input class="h-10 rounded-md" type="password" name="password" required>
                 <br><button class="m-2 box-border p-2 border-3 bg-slate-100 rounded-xl hover:bg-fuchsia-300" type="submit">Log in</button>
-                <br><h2> Not registered? Do so here -></h2>
-                <a href="/registration">Pop</a>
+                <br><h2>-----Not registered?-----</h2>
+                <div class="text-blue-700 flex justify-center"><a href="/registration">Register</a></div>
               </div>
             </form>
             </div>

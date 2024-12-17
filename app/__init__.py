@@ -106,7 +106,7 @@ def entry():
                     state = city['state']
                 else:
                     state = "none"
-                all_city+=(f'''<input type="radio" id="{city['lat']}" name="place" value={index} required> <label for="{city['lat']}"> {city['name']}, {state}, {city['country']}</label>''')
+                all_city+=(f'''<input type="radio" id="{city['lat']}" name="place" value={index} required> <label for="{city['lat']}" class="m-2"> {city['name']}, {state}, {city['country']}</label>''')
                 index+=1
             return render_template("entry_multiple.html", cities=all_city)
 

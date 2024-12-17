@@ -126,3 +126,8 @@ lindaZ -- 2024-12-16 22:02
 - Integrated dropdown menu for current weather forecasts
 - generated graph for temperature, humidity, percipitation
 - updated tailwind fef
+
+ethanS -- 2024-12-17 01:11
+- Added standard tailwind on each page
+- Completed userhistory page
+- Fixed database initialization

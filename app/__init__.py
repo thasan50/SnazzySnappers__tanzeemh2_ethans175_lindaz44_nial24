@@ -23,13 +23,11 @@ app = Flask(__name__)
 
 app.secret_key = os.urandom(32)
 
-if (os.path.isfile("geoTracker.db")):
-    os.remove("geoTracker.db")
-db.setup() # sets up databases
+if (not os.path.isfile("geoTracker.db")):
+    db.setup() # sets up databases
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
-    db.setup()
     if 'username' and 'place' in session:
         print(db.getTableData("users", "username", "Ethan"))
         print(session['place'])
@@ -44,7 +42,7 @@ def home():
         for row in weatherData:
             db.logWeather(num, session['username'], session['place'], session['lat'], session['lon'], float(row['main']['temp']), float(row['main']['humidity']), row['weather'][0]['main'], float(row['wind']['speed']))
             num+=1
-        
+
         #generates plots
         plot.forecast()
 
@@ -136,9 +134,19 @@ def earthquake_form():
 def earthquake_display():
     if 'username' not in session:
         return redirect('/')
-    APIs.fetch_earthquake_data(session['username'])
-    print(db.getTableData("earthquakes", "location_name", "California"))
 
+    earthquake_data = APIs.fetch_earthquake_data(session['username'])
+    if earthquake_data:
+        for quake in earthquake_data:
+            db.logEarthquakes(
+                session['username'],
+                quake['place'],
+                quake['lat'],
+                quake['lon'],
+                quake['magnitude'],
+                quake['depth'],
+                quake['description']
+            )
     return render_template('earthquake_display.html')
 
 @app.route("/registration", methods=['GET', 'POST'])
@@ -214,7 +222,11 @@ def history():
 
 @app.route("/user_history")
 def user_history():
-    return render_template('user_history.html')
+    if 'username' not in session:
+        return redirect("/login")
+    print(db.getTableData("users", "username", session['username'])[0])
+    history_data = db.getAllHistory(db.getTableData("users", "username", session['username'])[0])
+    return render_template("user_history.html", username=session['username'], history=history_data)
 
 @app.route("/humidity")
 def humidity():

@@ -13,7 +13,16 @@
     </style>
     <title>Earthquake Data Finder</title>
 </head>
-<body class="bg-gradient-to-r from-cyan-100 to-purple-200">
+<body class="font-mono bg-blue-100">
+  <!-- Navigation Bar -->
+  <ul class="flex bg-indigo-200 space-x-10 h-12 items-center">
+      <li><a class="flex hover:bg-green-100 p-3" href="/">current weather</a></li>
+      <li><a class="flex hover:bg-green-100 p-3" href="/history">weather history</a></li>
+      <li><a class="bg-green-100 flex hover:bg-green-100 p-3" href="/earthquake">earthquake map</a></li>
+      <li><a class="flex hover:bg-green-100 p-3" href="/user_history">{{ username }}'s request history</a></li>
+      <li><a class="flex hover:bg-green-100 p-3" href="/logout">logout</a></li>
+  </ul>
+  
     <h1>Earthquake Data Finder</h1>
     <form action="/earthquake_display" method="get">
         <label for="place">Enter a location:</label>

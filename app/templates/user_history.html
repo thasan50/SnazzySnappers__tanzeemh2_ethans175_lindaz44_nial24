@@ -5,14 +5,63 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <script src="https://cdn.tailwindcss.com"></script>
       <style type="text/tailwindcss">
-              @layer utilities {
-                  .content-auto {
-                    content-visibility: auto;
-                  }
-              }
+        @layer utilities {
+          .content-auto {
+            content-visibility: auto;
+          }
+        }
       </style>
+      <title>User Request History</title>
   </head>
-  <body>
-    User history
+  <body class="font-mono bg-blue-100">
+    <!-- Navigation Bar -->
+    <ul class="flex bg-indigo-200 space-x-10 h-12 items-center">
+        <li><a class="flex hover:bg-green-100 p-3" href="/">current weather</a></li>
+        <li><a class="flex hover:bg-green-100 p-3" href="/history">weather history</a></li>
+        <li><a class="flex hover:bg-green-100 p-3" href="/earthquake">earthquake map</a></li>
+        <li><a class="bg-green-100 flex hover:bg-green-100 p-3" href="/user_history">{{ username }}'s request history</a></li>
+        <li><a class="flex hover:bg-green-100 p-3" href="/logout">logout</a></li>
+    </ul>
+
+    <!-- Page Title -->
+    <h1 class="p-2 bg-indigo-300 text-lg font-bold">Welcome, {{ username }}</h1>
+
+    <!-- User History Table -->
+    <div class="p-4">
+      <h2 class="text-xl font-semibold mb-4">Your Search History</h2>
+      {% if history %}
+      <div class="overflow-x-auto">
+        <table class="table-auto border-collapse border border-gray-400 w-full bg-white">
+          <thead class="bg-indigo-200">
+            <tr>
+              <th class="border border-gray-400 px-4 py-2 text-left">#</th>
+              <th class="border border-gray-400 px-4 py-2 text-left">Search Type</th>
+              <th class="border border-gray-400 px-4 py-2 text-left">Location</th>
+              <th class="border border-gray-400 px-4 py-2 text-left">Search Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for entry in history %}
+            <tr class="hover:bg-gray-200">
+              <td class="border border-gray-400 px-4 py-2">{{ entry[0] }}</td>
+              <td class="border border-gray-400 px-4 py-2">{{ entry[2] }}</td>
+              <td class="border border-gray-400 px-4 py-2">{{ entry[3] }}</td>
+              <td class="border border-gray-400 px-4 py-2">{{ entry[4] }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <p class="p-3 bg-red-100 rounded-lg">No search history found.</p>
+      {% endif %}
+    </div>
+
+    <!-- Navigation to Other Page -->
+    <div class="flex justify-center mt-4">
+      <a href="/new_city">
+        <button class="box-border p-2 bg-slate-100 rounded-xl hover:bg-fuchsia-300" type="button">Enter New City</button>
+      </a>
+    </div>
   </body>
 </html>

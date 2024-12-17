@@ -2,7 +2,7 @@
 # SoftDev
 # P01: ArRESTed Development
 # 2024-12-17
-# Time Spent: x hours
+# Time Spent: alot
 
 import random
 import os
@@ -16,6 +16,7 @@ import json
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import plot
 
 DB_FILE = "db.py"
 app = Flask(__name__)
@@ -35,7 +36,7 @@ def home():
         print(session['lon'])
         print(session['lat'])
 
-        #generate plot
+        #populate db
         beegFile = APIs.fetch_openweather(session['lat'], session['lon'])
         weatherData = beegFile['list']
         db.resetWeather()
@@ -43,19 +44,12 @@ def home():
         for row in weatherData:
             db.logWeather(num, session['username'], session['place'], session['lat'], session['lon'], float(row['main']['temp']), float(row['main']['humidity']), row['weather'][0]['main'], float(row['wind']['speed']))
             num+=1
-        plt.figure()
-        a = db.getWeather()
-        for row in a:
-            x = row[0]
-            y = row[5]
-            plt.plot(x,y,'ro-')
-        plt.xlabel("intervals")
-        plt.ylabel("temperature")
-        plt.tight_layout()
+        
+        #generates plots
+        plot.forecast()
 
-        # plt.savefig('static/goo.png')
         print(db.getWeather())
-        return render_template("home.html", username = session['username'])
+        return render_template("home.html", username = session['username'], option="5-day forecast", place = session['place'], img_link="static/goo.png")
     else:
         return redirect("/login")
 #In home, if you receive some input, it should redirect into /view_city page
@@ -101,7 +95,7 @@ def entry():
             session['place'] = city_detail[0]['name']
             session['lat'] = float(city_detail[0]['lat'])
             session['lon'] = float(city_detail[0]['lon'])
-            return render_template("home.html", username = session['username'])
+            return render_template("home.html", username = session['username'], place = session['place'])
         else:
             #if there are multiple cities with same name
             all_city = ""
@@ -172,6 +166,14 @@ def logout():
     session.pop('place', None)
     return redirect("/login")
 
+@app.route("/new_city")
+def new_city():
+    session.pop('place', None)
+    session.pop('lat', None)
+    session.pop('lon', None)
+    return redirect("/entry")
+
+"""
 @app.route("/weather")
 def weather():
     '''
@@ -193,7 +195,7 @@ def weather():
     a = db.getWeather()
     for row in a:
         x = row[0]
-        y = row[5]
+        y = row[4]
         plt.plot(x,y,'ro-')
     plt.xlabel("intervals")
     plt.ylabel("temperature")
@@ -201,8 +203,8 @@ def weather():
 
     plt.savefig('static/goo.png')
     print(db.getWeather())
-    return render_template("view.html")
-
+    return render_template("view.html", place = session['place'])
+"""
 
 # # This should contain a button to redirect into /history page
 @app.route("/history")
@@ -213,6 +215,18 @@ def history():
 @app.route("/user_history")
 def user_history():
     return render_template('user_history.html')
+
+@app.route("/humidity")
+def humidity():
+    plot.humidity()
+    return render_template("home.html", username = session['username'], option="5-day humidity", place = session['place'], img_link="static/foo.png")
+
+@app.route("/percipitation")
+def percipitation():
+    plot.percipitation()
+    return render_template("home.html", username = session['username'], option="5-day percipitation", place = session['place'], img_link="static/boo.png")
+
+
 
 if __name__ == '__main__':
     app.debug = True

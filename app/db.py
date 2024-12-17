@@ -2,7 +2,7 @@
 # SoftDev
 # P01: ArRESTed Development
 # 2024-12-17
-# Time Spent: x hours
+# Time Spent: too many hours
 
 import sqlite3
 import csv

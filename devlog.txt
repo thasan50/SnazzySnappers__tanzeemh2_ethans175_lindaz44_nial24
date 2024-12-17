@@ -121,3 +121,8 @@ lindaZ -- 2024-12-16 00:11
 - Inserted data from openweather api into the database
 - Used matplotlib to generate graph with temperature data
 	* possible issue with file path? works for me currently though
+
+lindaZ -- 2024-12-16 22:02
+- Integrated dropdown menu for current weather forecasts
+- generated graph for temperature, humidity, percipitation
+- updated tailwind fef

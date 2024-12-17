@@ -12,7 +12,7 @@ Ethan Sie:
 
 Linda Zheng:
 - HTML template design and CSS styling with Tailwind
-- Implement functionality of Google Fonts API and VisualCrossing API with web app
+- Implement functionality of Open Weather API and matplotlibs
 
 Nia Lam:
 - Implement user registration page and database
